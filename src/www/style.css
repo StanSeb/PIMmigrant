@@ -99,7 +99,6 @@ header img {
   
   ::-webkit-scrollbar-thumb {
     background: rgb(228, 201, 49);
-    border-radius: 20px;
   }
   
   ::-webkit-scrollbar-thumb:hover {
