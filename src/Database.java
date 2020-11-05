@@ -48,6 +48,21 @@ public class Database {
         return notes;
     }
 
+    public Note getNoteByTitle(String title){
+        Note notes= null;
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes WHERE title = ?");
+            stmt.setString(1, title);
 
+            ResultSet rs = stmt.executeQuery();
+
+            Note[] notesFromRs = (Note[]) Utils.readResultSetToObject(rs, Note[].class);
+            notes = notesFromRs[0];
+
+        } catch (SQLException | JsonProcessingException throwables) {
+            throwables.printStackTrace();
+        }
+        return notes;
+    }
 
 }
