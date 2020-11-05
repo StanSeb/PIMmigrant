@@ -3,6 +3,7 @@ import express.middleware.Middleware;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class Main {
 
@@ -10,6 +11,33 @@ public class Main {
 
         Express app = new Express();
         Database db = new Database();
+
+
+        app.get("/rest/Notes",(req, res) ->{
+           List<Note> notes = db.getAllNotes();
+
+           res.json(notes);
+        });
+
+        app.get("/rest/Notes/:title", (req, res)->{
+
+            String title = req.getParam("title");
+
+
+            Note notes = db.getNoteByTitle(title);
+
+            res.json(notes);
+
+        });
+
+           app.post("/rest/Notes",(req, res)->{
+            Note notes = (Note) req.getBody(Note.class);
+
+            System.out.println(notes.toString());
+
+            db.createNotes(notes);
+
+        });
 
         try{
             app.use(Middleware.statics(Paths.get("src/www").toString()));
