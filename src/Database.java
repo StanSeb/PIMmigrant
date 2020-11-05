@@ -1,7 +1,9 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import express.utils.Utils;
+
+import javax.sound.midi.Soundbank;
+import java.sql.*;
+import java.util.List;
 
 public class Database {
 
@@ -26,6 +28,24 @@ public class Database {
         }catch (SQLException throwables){
             throwables.printStackTrace();
         }
+    }
+
+    public List<Note> getAllNotes(){
+        List<Note> notes = null;
+
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes");
+
+            ResultSet rs = stmt.executeQuery();
+
+            Note[] tempList = (Note[]) Utils.readResultSetToObject(rs, Note[].class);
+            notes = List.of(tempList);
+            System.out.println(notes);
+
+        }catch(SQLException | JsonProcessingException throwables){
+            throwables.printStackTrace();
+        }
+        return notes;
     }
 
 
