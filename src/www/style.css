@@ -24,9 +24,10 @@ header img {
 }
 
 .meny-bar {
-    display: inline-flex;
+    display: flex;
     margin-top: 2rem;
     margin-bottom: 1rem;
+
 }
 
 .search-container{
@@ -76,11 +77,32 @@ header img {
     background: none;
     border: 0.5px solid rgb(228, 201, 49);
     color: rgb(228, 201, 49);
+    transition: 0.2s ease;
 }
 
 .choice-container div button:hover{
     cursor: pointer;
+    background: rgb(228, 201, 49);
+    color: white;
 }
+
+::-webkit-scrollbar {
+    width: 15px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-left: 0.5px solid black;
+    box-shadow: inset 0 0 5px rgb(143, 143, 143);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgb(197, 197, 197);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(134, 134, 134);
+  }
 
 
 .notes-container {
@@ -92,12 +114,13 @@ header img {
 .notes-list{
     height: 500px;
     overflow-y: auto;
-    padding: 0.25rem;
     border-right: 0.5px solid black;
 }
 
 .notes-list ul li {
     padding: 0.5rem;
+    border-bottom: 0.5px solid black;
+    margin-bottom: 1rem;
 }
 
 .note {
