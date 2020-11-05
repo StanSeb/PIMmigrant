@@ -30,9 +30,7 @@ public class Note {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
-    }
+    public String getContent(){return content;}
 
     public void setContent(String content) {
         this.content = content;
