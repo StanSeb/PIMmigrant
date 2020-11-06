@@ -91,7 +91,7 @@ header img {
 }
 
 .notes-list{
-    height: 500px;
+    height: 447px;
     width: 250px;
     overflow-y: auto;
 }
@@ -162,6 +162,7 @@ header img {
     margin-left: 0.5rem;
     background: rgb(238, 215, 82);
     color: white;
+    font-size: 140%;
     transition: 0.2s ease;
     outline: none;
 }
@@ -170,6 +171,7 @@ header img {
     cursor: pointer;
     background: white;
     color: rgb(238, 215, 82);
+    border: 0.5px solid rgb(238, 215, 82);
 }
 
 .choice-container button:active{
