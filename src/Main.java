@@ -49,6 +49,7 @@ public class Main {
 
         app.listen(1000);
         System.out.println("System started at port 1000");
+        System.out.println("Testing");
 
     }
 }
