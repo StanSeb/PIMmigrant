@@ -9,12 +9,12 @@ async function getNotes() {
 }
 
 function renderNotes() {
-    var noteList = document.getElementById("#notes-list");
+    var noteList = document.querySelector("#notes-list");
 
     noteList.innerHTML = "";
 
     for (let note of notesArray) {
-        let noteLi = `<li class="note-li">${note.note}</li>`;
+        let noteLi = `<li class="note-li"> <h2>${note.title}</h2> <p>${note.content}</p></li>`;
 
         noteList.innerHTML += noteLi;
     }
@@ -35,7 +35,7 @@ function renderNotes() {
         divButtons.className = "div-buttons";
 
         addButton.innerHTML = '<i class="fas fa-plus"></i>'
-        saveButton.innerHTML = '<i class="fas fa-check"></i>';
+        saveButton.innerHTML = '<i class="fas fa-save"></i>';
         deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
 
         divButtons.appendChild(addButton);
@@ -104,4 +104,18 @@ async function deleteNote(index) {
     });
 
     renderNotes();
+}
+
+function search(input){
+    
+    let searchlist = $('.note-li');
+    
+    for(let findTitle of searchlist){
+        let foundTitle = $(findTitle).find('h2').text();
+        if(foundTitle.toLowerCase().includes(input.toLowerCase())){
+            $(findTitle).show();
+        }else{
+            $(findTitle).hide();
+        }
+    }
 }
