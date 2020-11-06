@@ -31,11 +31,15 @@ public class Main {
         });
 
            app.post("/rest/Notes",(req, res)->{
-            Note notes = (Note) req.getBody(Note.class);
 
-            System.out.println(notes.toString());
+               Note title = (Note) req.getBody(Note.class);
+               Note content = (Note) req.getBody(Note.class);
 
-            db.createNotes(notes);
+
+                System.out.println(title.toString());
+                System.out.println(content.toString());
+
+                db.createNotes(title, content);
 
         });
 
