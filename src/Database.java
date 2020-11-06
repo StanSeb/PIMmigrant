@@ -19,7 +19,7 @@ public class Database {
 
     public void createNotes(Note title, Note content){
         try{
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO notes (title, content) VALUES (? , ?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO notes (title, content) VALUES (?, ?)");
             stmt.setString(1, title.getContent());
             stmt.setString(2, content.getContent());
 
