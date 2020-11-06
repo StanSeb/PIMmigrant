@@ -17,7 +17,6 @@
     <main class="main-container">
 
         <section class="meny-bar">
-
             <div class="search-container">
                 <div class="search-bar">
                     <input type="text" placeholder="Search..." class="searchbox">
@@ -26,77 +25,16 @@
                     </div>
                 </div>
             </div>
-
-            <div class="choice-container">
-                <div>
-                    <button class="create-icon"><i class="fas fa-edit"></i></button>
-                    <button class="add-icon"><i class="fas fa-plus"></i></button>
-                    <button class="save-icon"><i class="fas fa-save"></i></button>
-                    <button class="delete-icon"><i class="fas fa-trash-alt"></i></button>
-                </div>
-            </div>
         </section>
 
         <section class="notes-container">
-            <aside class="notes-list">
-                <ul>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                    <li>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </li>
-                </ul>
+            <aside class="notes-list" id="notes-list">
+                
             </aside>
 
             <section class="note">
-                <h2>Title</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Placeat fuga vel, doloremque, blanditiis at eligendi error, maxime consequatur quos id accusantium
-                    numquam sint nihil cum.
-                    Non fugit eum perferendis quibusdam?</p>
+                <input type="text" placeholder="Title" id="title">
+                <textarea name="note" id="note" cols="110" rows="27"></textarea>
             </section>
 
         </section>
@@ -105,6 +43,9 @@
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src="script.js"></script>
+    <script>
+        window.onload = getNotes();
+    </script>
 </body>
 
 </html>
