@@ -23,25 +23,20 @@ header img {
     height: auto;
 }
 
-.meny-bar {
-    display: flex;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-
-}
-
 .search-container{
-    display: flex;
     margin: 0 auto;
-    margin-left: 1rem;
-    float: left;
+    margin-bottom: 2rem;
 }
 
 .search-bar{
     display: flex;
     margin: 0 auto;
-    border: 0.5px solid rgb(209, 209, 209);
-    align-items: center;    
+    width: 100%;
+    border: 0.5px solid rgb(209, 209, 209);  
+}
+
+.search-bar input{
+    width: 100%;
 }
 
 .searchbox{
@@ -58,10 +53,16 @@ header img {
     background: none;
     color: rgb(168, 168, 168);
     outline: none;
+    transition: 0.2s ease;
 }
 
 .search-buttons button:hover{
-    cursor: pointer;    
+    cursor: pointer;
+    color: black;    
+}
+
+.search-buttons button:active{
+    transform: scale(1.1);
 }
 
 ::-webkit-scrollbar {
@@ -130,6 +131,10 @@ header img {
 
 }
 
+.note input::placeholder{
+    color:rgb(206, 206, 206);
+}
+
 .note textarea{
     border: 0.5px solid rgb(206, 206, 206);
     outline: none;
@@ -142,6 +147,9 @@ header img {
     display: flex;
     flex-direction: row;
     margin: 0 auto;
+    position: relative;
+    left: 40%;
+    margin-top: 0.25rem;
 }
 
 .choice-container button{
@@ -152,13 +160,19 @@ header img {
     margin-top: 0.25rem;
     margin-right: 0.5rem;
     margin-left: 0.5rem;
-    background: rgb(228,201,49);
+    background: rgb(238, 215, 82);
     color: white;
     transition: 0.2s ease;
+    outline: none;
 }
 
 .choice-container button:hover{
     cursor: pointer;
     background: white;
-    color: rgb(228, 201, 49);
+    color: rgb(238, 215, 82);
+}
+
+.choice-container button:active{
+    transform: scale(1.1);
+    outline: none;
 }
