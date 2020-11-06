@@ -69,10 +69,13 @@ async function addNote() {
     let titleField = document.getElementById("title");
     let inputField = document.getElementById("note");
 
-    let inputFieldValue = inputField.value;
     let titleFieldValue = titleField.value;
+    let inputFieldValue = inputField.value;
 
-    let theBody = JSON.stringify({title: titleFieldValue, content: inputFieldValue });
+    let theBody = JSON.stringify(
+        {title: titleFieldValue,
+            content: inputFieldValue 
+        });
 
     if (inputFieldValue == "" && titleFieldValue == "") {
         alert("This field can not be empty");
@@ -85,7 +88,7 @@ async function addNote() {
 
         console.log(await result.text());
 
-        renderNotes();
+        getNotes();
     }
 }
 
@@ -118,4 +121,10 @@ function search(input){
             $(findTitle).hide();
         }
     }
+}
+
+function clearInput(){
+    document.getElementById('searchbox').value= "";
+    
+    renderNotes();
 }
