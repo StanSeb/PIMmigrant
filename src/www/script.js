@@ -34,8 +34,8 @@ function renderNotes() {
         deleteButton.className = "delete-btn";
         divButtons.className = "div-buttons";
 
-        addButton.innerHTML = '<i class="fas fa-plus"></i>'
         saveButton.innerHTML = '<i class="fas fa-save"></i>';
+        addButton.innerHTML = '<i class="fas fa-paperclip"></i>';
         deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
 
         divButtons.appendChild(addButton);
@@ -69,23 +69,27 @@ async function addNote() {
     let titleField = document.getElementById("title");
     let inputField = document.getElementById("note");
 
-    let inputFieldValue = inputField.value;
     let titleFieldValue = titleField.value;
+    let inputFieldValue = inputField.value;
 
-    let theBody = JSON.stringify({title: titleFieldValue, content: inputFieldValue });
+    let theBody = JSON.stringify(
+        {title: titleFieldValue,
+            content: inputFieldValue 
+        });
 
     if (inputFieldValue == "" && titleFieldValue == "") {
-        alert("This field can not be empty");
+        alert("The fields can not be empty!");
     } else {
 
         let result = await fetch("/rest/Notes", {
             method: "POST",
-            body: theBody  
+            body: theBody
         });
 
         console.log(await result.text());
 
-        renderNotes();
+        getNotes();
+
     }
 }
 
@@ -118,4 +122,10 @@ function search(input){
             $(findTitle).hide();
         }
     }
+}
+
+function clearInput(){
+    document.getElementById('searchbox').value= "";
+    
+    renderNotes();
 }

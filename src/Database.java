@@ -17,12 +17,11 @@ public class Database {
         }
     }
 
-    public void createNotes(Note notes){
+    public void createNotes(Note note){
         try{
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO notes (title, content) VALUES (?, ?)");
-            stmt.setString(1, notes.getTitle());
-            stmt.setString(2, notes.getContent());
-
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO notes (title, content) VALUES (?,?)");
+            stmt.setString(1, note.getTitle());
+            stmt.setString(2, note.getContent());
             stmt.executeUpdate();
 
         }catch (SQLException throwables){
@@ -34,7 +33,7 @@ public class Database {
         List<Note> notes = null;
 
         try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes INNER JOIN files ON notes.id = files.note_id");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes");
 
             ResultSet rs = stmt.executeQuery();
 
