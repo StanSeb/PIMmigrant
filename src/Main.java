@@ -23,22 +23,20 @@ public class Main {
 
             String title = req.getParam("title");
 
-
             Note notes = db.getNoteByTitle(title);
 
             res.json(notes);
 
         });
 
-           app.post("/rest/Notes",(req, res)->{
+        app.post("/rest/Notes",(req, res)->{
 
-               Note note = (Note)req.getBody(Note.class);
-              //Note content = (Note)req.getBody(Note.class);
+            Note note = (Note) req.getBody(Note.class);
 
-                System.out.println(note.toString());
-                //System.out.println(content.toString());
+            System.out.println(note.toString());
 
-                db.createNotes(note);
+            db.createNotes(note);
+
 
         });
 
