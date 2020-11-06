@@ -3,15 +3,23 @@ public class Note {
     private int id;
     private String title;
     private String content;
+    private String filename;
 
-    public Note(){
-
+    public String getFilename() {
+        return filename;
     }
 
-    public Note(int id, String title, String content) {
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public Note() {}
+
+    public Note(int id, String title, String content, String filename) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.filename = filename;
     }
 
     public int getId() {
@@ -30,7 +38,9 @@ public class Note {
         this.title = title;
     }
 
-    public String getContent(){return content;}
+    public String getContent() {
+        return content;
+    }
 
     public void setContent(String content) {
         this.content = content;
@@ -42,6 +52,7 @@ public class Note {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", filename='" + filename + '\'' +
                 '}';
     }
 }
