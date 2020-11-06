@@ -1,14 +1,15 @@
+let notesArray = [];
+
 async function getNotes() {
     let result = await fetch("/rest/Notes");
     notesArray = await result.json();
 
     renderNotes();
     assignDeleteButtons();
-    checkNote();
 }
 
 function renderNotes() {
-    var noteList = document.querySelector("#notes-list");
+    var noteList = document.getElementById("#notes-list");
 
     noteList.innerHTML = "";
 
@@ -71,8 +72,7 @@ async function addNote() {
     let inputFieldValue = inputField.value;
     let titleFieldValue = titleField.value;
 
-    let theTitleBody = JSON.stringify({title: titleFieldValue });
-    let theInputBody = JSON.stringify({note: inputFieldValue})
+    let theBody = JSON.stringify({title: titleFieldValue, content: inputFieldValue });
 
     if (inputFieldValue == "" && titleFieldValue == "") {
         alert("This field can not be empty");
@@ -80,7 +80,7 @@ async function addNote() {
 
         let result = await fetch("/rest/Notes", {
             method: "POST",
-            body: theInputBody
+            body: theBody
         });
 
         console.log(await result.text());
