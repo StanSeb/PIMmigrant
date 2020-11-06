@@ -1,7 +1,6 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import express.utils.Utils;
 
-import javax.sound.midi.Soundbank;
 import java.sql.*;
 import java.util.List;
 
@@ -18,10 +17,11 @@ public class Database {
         }
     }
 
-    public void createNotes(Note notes){
+    public void createNotes(Note title, Note content){
         try{
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO notes (content) VALUES (?)");
-            stmt.setString(1, notes.getContent());
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO notes (title, content) VALUES (? , ?)");
+            stmt.setString(1, title.getContent());
+            stmt.setString(2, content.getContent());
 
             stmt.executeUpdate();
 
@@ -34,7 +34,7 @@ public class Database {
         List<Note> notes = null;
 
         try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes INNER JOIN files ON notes.id = files.note_id");
 
             ResultSet rs = stmt.executeQuery();
 
@@ -51,7 +51,7 @@ public class Database {
     public Note getNoteByTitle(String title){
         Note notes= null;
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes WHERE title = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes INNER JOIN files ON notes.id = files.notes_id WHERE notes.title = ?");
             stmt.setString(1, title);
 
             ResultSet rs = stmt.executeQuery();
@@ -63,6 +63,8 @@ public class Database {
             throwables.printStackTrace();
         }
         return notes;
+
+
     }
 
 }
