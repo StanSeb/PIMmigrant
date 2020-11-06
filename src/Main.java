@@ -30,16 +30,16 @@ public class Main {
 
         });
 
-           app.post("/rest/Notes",(req, res)->{
+        app.post("/rest/Notes",(req, res)->{
 
-               Note title = (Note) req.getBody(Note.class);
-               Note content = (Note) req.getBody(Note.class);
+            Note notes = (Note) req.getBody(Note.class);
 
 
-                System.out.println(title.toString());
-                System.out.println(content.toString());
+            System.out.println(notes.toString());
 
-                db.createNotes(title, content);
+
+            db.createNotes(notes);
+
 
         });
 

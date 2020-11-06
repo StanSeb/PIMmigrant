@@ -80,7 +80,7 @@ async function addNote() {
 
         let result = await fetch("/rest/Notes", {
             method: "POST",
-            body: theBody
+            body: theBody  
         });
 
         console.log(await result.text());

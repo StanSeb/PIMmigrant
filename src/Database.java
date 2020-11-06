@@ -17,11 +17,11 @@ public class Database {
         }
     }
 
-    public void createNotes(Note title, Note content){
+    public void createNotes(Note notes){
         try{
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO notes (title, content) VALUES (?, ?)");
-            stmt.setString(1, title.getContent());
-            stmt.setString(2, content.getContent());
+            stmt.setString(1, notes.getTitle());
+            stmt.setString(2, notes.getContent());
 
             stmt.executeUpdate();
 
