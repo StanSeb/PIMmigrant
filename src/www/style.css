@@ -95,11 +95,22 @@ header img {
     overflow-y: auto;
 }
 
-.notes-list ul li {
+.note-li {
     padding: 0.5rem;
     border-bottom: 0.5px solid rgb(206, 206, 206);
     margin-top: 1rem;
     font-size: 12px;
+    list-style-type: none;
+}
+
+.note-li h2{
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.note-li button{
+    display: none;
 }
 
 .note {
@@ -125,4 +136,29 @@ header img {
     padding: 1rem;
     font-family: 'Montserrat', sans-serif;
     resize: none;
+}
+
+.choice-container{
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+}
+
+.choice-container button{
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 0;
+    margin-top: 0.25rem;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    background: rgb(228,201,49);
+    color: white;
+    transition: 0.2s ease;
+}
+
+.choice-container button:hover{
+    cursor: pointer;
+    background: white;
+    color: rgb(228, 201, 49);
 }
