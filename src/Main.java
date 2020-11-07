@@ -42,9 +42,8 @@ public class Main {
         });
         ///////////////////////////
 
-        app.post("/api/IMAGES", (req, res)->{
+        app.post("/api/imgs", (req, res)->{
             String imageUrl = null;
-        });
 
         try{
             List<FileItem> files = req.getFormData("files");
@@ -54,9 +53,11 @@ public class Main {
         }catch (Exception e){
             /// no image upploaded
             e.printStackTrace();
-        }
-
+            }
         res.send(imageUrl);
+
+        });
+
 
         try{
             app.use(Middleware.statics(Paths.get("src/www").toString()));
