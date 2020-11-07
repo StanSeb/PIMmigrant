@@ -65,5 +65,29 @@ public class Database {
 
 
     }
+    public void updateNote(Note note){
+        try {
+            PreparedStatement stmt = conn.prepareStatement("UPDATE notes SET title = ?, content = ? WHERE id = ?");
+            stmt.setString(1, note.getTitle());
+            stmt.setString(2, note.getContent());
+            stmt.setInt(3, note.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+    public void deleteNote(Note note){
+        try {
+            PreparedStatement  stmt = conn.prepareStatement("DELETE FROM notes WHERE id = ?");
+            stmt.setInt(1, note.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
 
 }
