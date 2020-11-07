@@ -93,7 +93,7 @@ public class Database {
 
     }
 
-    /////////////// MALL för att bild //////////////////////
+    /////////////// MALL uploadImage //////////////////////
 
     public String uploadImage(FileItem image) {
         String imageUrl = "/www/imgs" + image.getName();

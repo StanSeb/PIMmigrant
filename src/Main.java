@@ -36,6 +36,28 @@ public class Main {
 
             System.out.println(note.toString());
 
+            db.updateNote(note);
+
+
+        });
+
+        app.delete("/rest/Notes",(req, res)->{
+
+            Note note = (Note) req.getBody(Note.class);
+
+            System.out.println(note.toString());
+
+            db.deleteNote(note);
+
+
+        });
+
+        app.post("/rest/Notes",(req, res)->{
+
+            Note note = (Note) req.getBody(Note.class);
+
+            System.out.println(note.toString());
+
             db.createNotes(note);
 
 
@@ -57,6 +79,7 @@ public class Main {
         res.send(imageUrl);
 
         });
+
 
 
         try{
