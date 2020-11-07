@@ -42,21 +42,22 @@ public class Main {
         });
         ///////////////////////////
 
-        app.post("/api/IMAGES", (req, res)->{
+        app.post("/api/IMAGES", (req, res)-> {
             String imageUrl = null;
+
+            try {
+                List<FileItem> files = req.getFormData("files");
+                imageUrl = db.uploadImage(files.get(0));
+                /////Upload image function finns som mall i Database Class.
+
+            } catch (Exception e) {
+                /// no image upploaded
+                e.printStackTrace();
+            }
+
+            res.send(imageUrl);
+
         });
-
-        try{
-            List<FileItem> files = req.getFormData("files");
-            imageUrl = db.uploadImage(files.get(0));
-            /////Upload image function finns som mall i Database Class.
-
-        }catch (Exception e){
-            /// no image upploaded
-            e.printStackTrace();
-        }
-
-        res.send(imageUrl);
 
         try{
             app.use(Middleware.statics(Paths.get("src/www").toString()));

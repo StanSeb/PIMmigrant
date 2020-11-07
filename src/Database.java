@@ -5,6 +5,7 @@ import org.apache.commons.fileupload.FileItem;
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.time.Instant;
 import java.util.List;
 
 public class Database {
@@ -22,9 +23,11 @@ public class Database {
 
     public void createNotes(Note note){
         try{
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO notes (title, content) VALUES (?,?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO notes (title, content, timestamp) VALUES (?,?,?)");
             stmt.setString(1, note.getTitle());
             stmt.setString(2, note.getContent());
+            stmt.setLong(3, Instant.now().toEpochMilli());
+
             stmt.executeUpdate();
 
         }catch (SQLException throwables){
@@ -36,7 +39,7 @@ public class Database {
         List<Note> notes = null;
 
         try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes INNER JOIN files ON notes.id = files.note_id");
 
             ResultSet rs = stmt.executeQuery();
 
@@ -70,9 +73,10 @@ public class Database {
     }
     public void updateNote(Note note){
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE notes SET title = ?, content = ? WHERE id = ?");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE notes SET title = ?, content = ?, timestamp = ? WHERE notes.id = ?");
             stmt.setString(1, note.getTitle());
             stmt.setString(2, note.getContent());
+            stmt.setLong(3, note.getTimestamp());
             stmt.setInt(3, note.getId());
 
             stmt.executeUpdate();
@@ -83,7 +87,7 @@ public class Database {
     }
     public void deleteNote(Note note){
         try {
-            PreparedStatement  stmt = conn.prepareStatement("DELETE FROM notes WHERE id = ?");
+            PreparedStatement  stmt = conn.prepareStatement("DELETE FROM notes INNER JOIN files ON notes.id=files.note_id WHERE notes.id = ?");
             stmt.setInt(1, note.getId());
 
             stmt.executeUpdate();
@@ -95,14 +99,15 @@ public class Database {
 
     /////////////// MALL för att bild //////////////////////
 
-    public String uploadImage(FileItem image){
+    public String uploadImage(FileItem image) {
         String imageUrl = "/IMAGES/" + image.getName();
 
-        try(var os = new FileOutputStream(Paths.get("src/www" + imageUrl).toString())){
+        try (var os = new FileOutputStream(Paths.get("src/www" + imageUrl).toString())) {
             os.write(image.get());
-        }catch (Exception e)
+        } catch (Exception e) {
             e.printStackTrace();
-        return null;
-    }
+            return null;
+        }
         return imageUrl;
+    }
 }
