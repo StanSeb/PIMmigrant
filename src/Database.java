@@ -56,7 +56,7 @@ public class Database {
     public Note getNoteByTitle(String title){
         Note notes= null;
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes INNER JOIN files ON notes.id = files.notes_id WHERE notes.title = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes INNER JOIN files ON notes.id = files.note_id WHERE notes.title = ?");
             stmt.setString(1, title);
 
             ResultSet rs = stmt.executeQuery();
@@ -87,7 +87,7 @@ public class Database {
     }
     public void deleteNote(Note note){
         try {
-            PreparedStatement  stmt = conn.prepareStatement("DELETE FROM notes INNER JOIN files ON notes.id=files.note_id WHERE notes.id = ?");
+            PreparedStatement  stmt = conn.prepareStatement("DELETE FROM notes  WHERE notes.id = ?");
             stmt.setInt(1, note.getId());
 
             stmt.executeUpdate();
