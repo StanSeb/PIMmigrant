@@ -20,6 +20,17 @@ public class Database {
             throwables.printStackTrace();
         }
     }
+    public String uploadImage(FileItem image) {
+        String filename = "/IMAGES/" + image.getName();
+
+        try (var os = new FileOutputStream(Paths.get("src/www" + filename).toString())) {
+            os.write(image.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return filename;
+    }
 
     public void createNotes(Note note){
         try{
@@ -79,42 +90,34 @@ public class Database {
     public void updateNote(Note note){
         try {
             PreparedStatement stmt = conn.prepareStatement("UPDATE notes SET title = ?, content = ?, timestamp = ? WHERE notes.id = ?");
+            PreparedStatement stmt1 = conn.prepareStatement("UPDATE files SET filename = ? WHERE files.note_id = ?");
             stmt.setString(1, note.getTitle());
             stmt.setString(2, note.getContent());
             stmt.setLong(3, note.getTimestamp());
-            stmt.setInt(3, note.getId());
+            stmt.setInt(4, note.getId());
+            stmt1.setString(1, note.getFilename());
+            stmt1.setInt(2, note.getId());
 
             stmt.executeUpdate();
+            stmt1.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
     }
 
-    public void deleteNote(Note note){
+    public void deleteNote(Note note) {
         try {
-            PreparedStatement  stmt = conn.prepareStatement("DELETE FROM notes  WHERE notes.id = ?");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM notes  WHERE notes.id = ?");
+            PreparedStatement stmt1 = conn.prepareStatement("DELETE FROM files WHERE files.note_id = ?");
             stmt.setInt(1, note.getId());
+            stmt1.setInt(1, note.getId());
 
             stmt.executeUpdate();
+            stmt1.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    /////////////// MALL //////////////////////
-
-    public String uploadImage(FileItem image) {
-
-        String fileName = "/img/" + image.getName();
-      
-
-        try (var os = new FileOutputStream(Paths.get("src/www" + fileName).toString())) {
-            os.write(image.get());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return fileName;
-    }
 }
