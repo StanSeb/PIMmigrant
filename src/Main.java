@@ -13,6 +13,21 @@ public class Main {
         Express app = new Express();
         Database db = new Database();
 
+        app.post("/api/imgs", (req, res)->{
+            String fileName = null;
+
+            try {
+                List<FileItem> files = req.getFormData("files");
+                fileName = db.uploadImage(files.get(0));
+                /////Upload image function finns som mall i Database Class.
+
+        }catch (Exception e){
+            /// no image upploaded
+            e.printStackTrace();
+            }
+        res.send(fileName);
+
+        });
 
         app.get("/rest/Notes",(req, res) ->{
            List<Note> notes = db.getAllNotes();
@@ -54,7 +69,7 @@ public class Main {
 
         app.post("/rest/Notes",(req, res)->{
 
-            Note note = (Note) req.getBody(Note.class);
+            Note note = (Note)req.getBody(Note.class);
 
             System.out.println(note.toString());
 
@@ -63,6 +78,7 @@ public class Main {
 
         });
         ///////////////////////////
+
 
         app.post("/api/imgs", (req, res)->{
             String filename = null;
@@ -79,6 +95,7 @@ public class Main {
         res.send(filename);
 
         });
+
 
 
 

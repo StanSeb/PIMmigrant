@@ -14,12 +14,17 @@ function renderNotes() {
     noteList.innerHTML = '';
 
     for (let note of notesArray) {
-        let noteLi = `<li class="note-li"> <h2>${note.title}</h2> <p>${note.content}</p></li>`;
+        let date = (new Date()).toDateString();
+
+        let noteLi =    `<li class="note-li">
+                        <h2>${note.title}</h2>
+                        <h3>${date}</h3>
+                        <p>${note.content}</p></li>`;
 
         noteList.innerHTML += noteLi;
     }
 
-    let allLi = document.getElementsByTagName("li");
+    /*let allLi = document.getElementsByTagName("li");
     let i;
 
     for (i = 0; i < allLi.length; i++) {
@@ -45,6 +50,7 @@ function renderNotes() {
         allLi[i].appendChild(divButtons);
 
     }
+    */
 
 }
 
@@ -68,13 +74,16 @@ async function addNote() {
 
     let titleField = document.getElementById("title");
     let inputField = document.getElementById("note");
+    let timeStamp = document.getElementsByName("h3");
 
     let titleFieldValue = titleField.value;
     let inputFieldValue = inputField.value;
+    let timeStampValute = timeStamp.value;
 
     let theBody = JSON.stringify(
         {title: titleFieldValue,
-            content: inputFieldValue 
+            content: inputFieldValue,
+            timestamp: timeStampValute
         });
 
     if (inputFieldValue == "" && titleFieldValue == "") {
