@@ -12,11 +12,11 @@ public class Database {
 
     private Connection conn;
 
-    public Database() {
+    public Database(){
 
-        try {
+        try{
             conn = DriverManager.getConnection("jdbc:sqlite:PIMmigrant_DB.db");
-        } catch (SQLException throwables) {
+        }catch (SQLException throwables){
             throwables.printStackTrace();
         }
     }
@@ -24,18 +24,24 @@ public class Database {
     public void createNotes(Note note){
         try{
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO notes (title, content, timestamp) VALUES (?,?,?)");
+            PreparedStatement stmt1 = conn.prepareStatement("INSERT INTO files (filename, note_id) VALUES (?,?)");
             stmt.setString(1, note.getTitle());
             stmt.setString(2, note.getContent());
             stmt.setLong(3, Instant.now().toEpochMilli());
+            stmt1.setString(1, note.getFilename());
+            stmt1.setInt(2, note.getId());
+
+
 
             stmt.executeUpdate();
+            stmt1.executeUpdate();
 
-        } catch (SQLException throwables) {
+        }catch (SQLException throwables){
             throwables.printStackTrace();
         }
     }
 
-    public List<Note> getAllNotes() {
+    public List<Note> getAllNotes(){
         List<Note> notes = null;
 
         try{
@@ -47,14 +53,14 @@ public class Database {
             notes = List.of(tempList);
             System.out.println(notes);
 
-        } catch (SQLException | JsonProcessingException throwables) {
+        }catch(SQLException | JsonProcessingException throwables){
             throwables.printStackTrace();
         }
         return notes;
     }
 
-    public Note getNoteByTitle(String title) {
-        Note notes = null;
+    public Note getNoteByTitle(String title){
+        Note notes= null;
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes INNER JOIN files ON notes.id = files.note_id WHERE notes.title = ?");
             stmt.setString(1, title);
@@ -68,9 +74,8 @@ public class Database {
             throwables.printStackTrace();
         }
         return notes;
-
-
     }
+
     public void updateNote(Note note){
         try {
             PreparedStatement stmt = conn.prepareStatement("UPDATE notes SET title = ?, content = ?, timestamp = ? WHERE notes.id = ?");
@@ -85,6 +90,7 @@ public class Database {
         }
 
     }
+
     public void deleteNote(Note note){
         try {
             PreparedStatement  stmt = conn.prepareStatement("DELETE FROM notes  WHERE notes.id = ?");
@@ -94,13 +100,14 @@ public class Database {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
-    /////////////// MALL uploadImage //////////////////////
+    /////////////// MALL //////////////////////
 
     public String uploadImage(FileItem image) {
+
         String fileName = "/img/" + image.getName();
+      
 
         try (var os = new FileOutputStream(Paths.get("src/www" + fileName).toString())) {
             os.write(image.get());

@@ -8,15 +8,15 @@ public class Note {
     private int timestamp;
 
 
-    public Note(int id, String title, String content, String filename, int note_id, int timestamp) {
+    public Note(int id, String title, String content, int timestamp, String filename, int note_id) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.timestamp = timestamp;
         this.filename = filename;
         this.note_id = note_id;
-        this.timestamp = timestamp;
     }
-
+    public Note() {}
 
     public int getTimestamp() {
         return timestamp;
@@ -32,9 +32,6 @@ public class Note {
 
     public void setFilename(String filename) {
         this.filename = filename;
-    }
-
-    public Note() {
     }
 
     public int getId() {
