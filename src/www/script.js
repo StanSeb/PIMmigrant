@@ -1,23 +1,43 @@
+async function attach(e) {
+    e.preventDefault();
+    let files = document.querySelector('.add-btn').getNotes;
+    let formData = new FormData();
+    formData.append('file', file.name);
+    await fetch('/upload.php', {method: "POST", body: formData});
+    alert("upload complete");
+}
+
 let notesArray = [];
 
+// Communication between js and the server
 async function getNotes() {
-    let result = await fetch("/rest/Notes");
-    notesArray = await result.json();
+    let result = await fetch("/rest/Notes");  // answer from server
+    notesArray = await result.json();  // converting from json to js object
+    
+    // Every fetch looks like this
 
     renderNotes();
     assignDeleteButtons();
 }
 
 function renderNotes() {
-    var noteList = document.querySelector("#notes-list");
+    var noteList = document.querySelector("#notes-list"); // Element containing Notes
 
-    noteList.innerHTML = "";
+    noteList.innerHTML = ""; // Empty note list
 
+    // This block of code will loop all notes from notesArray into noteList.innerHTML, 
     for (let note of notesArray) {
-        let noteLi = `<li class="note-li"> <h2>${note.title}</h2> <p>${note.content}</p></li>`;
+        let noteLi =`
+        <li class="note-li">
+            <h2>${note.title}</h2>
+            <p>${note.content}</p>
+        </li>
+        `;             
+
 
         noteList.innerHTML += noteLi;
     }
+
 
     let allLi = document.getElementsByTagName("li");
     let i;
@@ -129,3 +149,6 @@ function clearInput(){
     
     renderNotes();
 }
+
+
+
