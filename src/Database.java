@@ -100,7 +100,9 @@ public class Database {
     /////////////// MALL uploadImage //////////////////////
 
     public String uploadImage(FileItem image) {
+
         String fileName = "/img/" + image.getName();
+      
 
         try (var os = new FileOutputStream(Paths.get("src/www" + fileName).toString())) {
             os.write(image.get());
