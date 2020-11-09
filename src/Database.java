@@ -20,6 +20,17 @@ public class Database {
             throwables.printStackTrace();
         }
     }
+    public String uploadImage(FileItem image) {
+        String filename = "/IMAGES/" + image.getName();
+
+        try (var os = new FileOutputStream(Paths.get("src/www" + filename).toString())) {
+            os.write(image.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return filename;
+    }
 
     public void createNotes(Note note){
         try{
@@ -93,9 +104,9 @@ public class Database {
 
     }
 
-    public void deleteNote(Note note){
+    public void deleteNote(Note note) {
         try {
-            PreparedStatement  stmt = conn.prepareStatement("DELETE FROM notes  WHERE notes.id = ?");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM notes  WHERE notes.id = ?");
             PreparedStatement stmt1 = conn.prepareStatement("DELETE FROM files WHERE files.note_id = ?");
             stmt.setInt(1, note.getId());
             stmt1.setInt(1, note.getId());
@@ -105,19 +116,5 @@ public class Database {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-    }
-
-    /////////////// MALL //////////////////////
-
-    public String uploadImage(FileItem image) {
-        String imageUrl = "/IMAGES/" + image.getName();
-
-        try (var os = new FileOutputStream(Paths.get("src/www" + imageUrl).toString())) {
-            os.write(image.get());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return imageUrl;
     }
 }

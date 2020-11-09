@@ -65,18 +65,18 @@ public class Main {
         ///////////////////////////
 
         app.post("/api/imgs", (req, res)->{
-            String imageUrl = null;
+            String filename = null;
 
             try {
                 List<FileItem> files = req.getFormData("files");
-                imageUrl = db.uploadImage(files.get(0));
+                filename = db.uploadImage(files.get(0));
                 /////Upload image function finns som mall i Database Class.
 
         }catch (Exception e){
             /// no image upploaded
             e.printStackTrace();
             }
-        res.send(imageUrl);
+        res.send(filename);
 
         });
 
