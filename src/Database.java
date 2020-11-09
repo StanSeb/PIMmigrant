@@ -31,6 +31,8 @@ public class Database {
             stmt1.setString(1, note.getFilename());
             stmt1.setInt(2, note.getId());
 
+
+
             stmt.executeUpdate();
             stmt1.executeUpdate();
 

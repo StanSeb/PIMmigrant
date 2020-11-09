@@ -69,7 +69,7 @@ public class Main {
 
         app.post("/rest/Notes",(req, res)->{
 
-            Note note = (Note) req.getBody(Note.class);
+            Note note = (Note)req.getBody(Note.class);
 
             System.out.println(note.toString());
 
