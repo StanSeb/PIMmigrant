@@ -168,7 +168,7 @@ header img {
 }
 
 .choice-container button:hover{
-    cursor: pointer;
+    /*cursor: pointer;*/
     background: white;
     color: rgb(238, 215, 82);
     border: 0.5px solid rgb(238, 215, 82);

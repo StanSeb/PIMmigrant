@@ -11,7 +11,7 @@ async function getNotes() {
 function renderNotes() {
     var noteList = document.querySelector("#notes-list");
 
-    noteList.innerHTML = "";
+    noteList.innerHTML = '';
 
     for (let note of notesArray) {
         let noteLi = `<li class="note-li"> <h2>${note.title}</h2> <p>${note.content}</p></li>`;
