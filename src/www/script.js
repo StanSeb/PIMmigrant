@@ -34,8 +34,8 @@ function renderNotes() {
         deleteButton.className = "delete-btn";
         divButtons.className = "div-buttons";
 
-        addButton.innerHTML = '<i class="fas fa-plus"></i>'
         saveButton.innerHTML = '<i class="fas fa-save"></i>';
+        addButton.innerHTML = '<i class="fas fa-paperclip"></i>';
         deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
 
         divButtons.appendChild(addButton);
@@ -78,7 +78,7 @@ async function addNote() {
         });
 
     if (inputFieldValue == "" && titleFieldValue == "") {
-        alert("This field can not be empty");
+        alert("The fields can not be empty!");
     } else {
 
         let result = await fetch("/rest/Notes", {
@@ -89,6 +89,7 @@ async function addNote() {
         console.log(await result.text());
 
         getNotes();
+
     }
 }
 

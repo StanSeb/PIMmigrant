@@ -16,31 +16,25 @@
 
     <main class="main-container">
 
-        <section class="notes-container">
-
-            <div class="list-container">
-                <div class="search-container">
-                    <div class="search-bar">
-                        <input type="text" placeholder="Search..." class="searchbox" id="searchbox" onkeyup="search(this.value)">
-                        <div class="search-buttons">
-                            <button class="cross-icon" id="clear" onclick="clearInput()"><i class="far fa-times-circle"></i></button>
-                        </div>
+        <section class="meny-bar">
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search..." class="searchbox">
+                    <div class="search-buttons">
+                        <button class="cross-icon"><i class="far fa-times-circle"></i></button>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <aside class="notes-list" id="notes-list"></aside>
-
-            </div>            
+        <section class="notes-container">
+            <aside class="notes-list" id="notes-list">
+                
+            </aside>
 
             <section class="note">
-                <input type="text" placeholder="Title" id="title" required>
-                <textarea name="note" id="note" cols="105" rows="27"required></textarea>
-                
-                <div class="choice-container">
-                    <button class="save-btn" onclick="addNote()"><i class="fas fa-save"></i></button>
-                    <button class="add-btn"><i class="fas fa-plus"></i></button>
-                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
-                </div>
+                <input type="text" placeholder="Title" id="title">
+                <textarea name="note" id="note" cols="110" rows="27"></textarea>
             </section>
 
         </section>
