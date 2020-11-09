@@ -103,14 +103,16 @@ public class Database {
     /////////////// MALL //////////////////////
 
     public String uploadImage(FileItem image) {
-        String imageUrl = "/IMAGES/" + image.getName();
 
-        try (var os = new FileOutputStream(Paths.get("src/www" + imageUrl).toString())) {
+        String fileName = "/img/" + image.getName();
+      
+
+        try (var os = new FileOutputStream(Paths.get("src/www" + fileName).toString())) {
             os.write(image.get());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-        return imageUrl;
+        return fileName;
     }
 }
