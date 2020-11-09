@@ -5,10 +5,11 @@ public class Note {
     private String content;
     private String filename;
     private int note_id;
-    private int timestamp;
+    private long timestamp;
 
+    public Note() {}
 
-    public Note(int id, String title, String content, int timestamp, String filename, int note_id) {
+    public Note(int id, String title, String content, long timestamp, String filename, int note_id) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -16,24 +17,20 @@ public class Note {
         this.filename = filename;
         this.note_id = note_id;
     }
-    public Note() {}
 
-    public int getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(int timestamp) {
+    public Note( String title, String content,  long timestamp) {
+        this.title = title;
+        this.content = content;
         this.timestamp = timestamp;
     }
 
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
+    public Note(int id, String title, String filename, int note_id, long timestamp) {
+        this.id = id;
+        this.title = title;
         this.filename = filename;
+        this.note_id = note_id;
+        this.timestamp = timestamp;
     }
-
     public int getId() {
         return id;
     }
@@ -58,12 +55,28 @@ public class Note {
         this.content = content;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     public int getNote_id() {
         return note_id;
     }
 
     public void setNote_id(int note_id) {
         this.note_id = note_id;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override
