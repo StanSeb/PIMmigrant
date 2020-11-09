@@ -5,6 +5,26 @@ public class Note {
     private String content;
     private String filename;
     private int note_id;
+    private int timestamp;
+
+
+    public Note(int id, String title, String content, String filename, int note_id, int timestamp) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.filename = filename;
+        this.note_id = note_id;
+        this.timestamp = timestamp;
+    }
+
+
+    public int getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(int timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public String getFilename() {
         return filename;
@@ -14,14 +34,7 @@ public class Note {
         this.filename = filename;
     }
 
-    public Note() {}
-
-    public Note(int id, String title, String content, String filename, int note_id) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.filename = filename;
-        this.note_id = note_id;
+    public Note() {
     }
 
     public int getId() {
@@ -64,6 +77,9 @@ public class Note {
                 ", content='" + content + '\'' +
                 ", filename='" + filename + '\'' +
                 ", note_id=" + note_id +
+                ", timestamp=" + timestamp +
                 '}';
     }
 }
+
+
