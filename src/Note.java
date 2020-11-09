@@ -16,7 +16,7 @@ public class Note {
         this.note_id = note_id;
         this.timestamp = timestamp;
     }
-
+    public Note() {}
 
     public int getTimestamp() {
         return timestamp;
@@ -32,9 +32,6 @@ public class Note {
 
     public void setFilename(String filename) {
         this.filename = filename;
-    }
-
-    public Note() {
     }
 
     public int getId() {
