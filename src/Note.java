@@ -1,38 +1,22 @@
+import java.util.Date;
+
 public class Note {
 
     private int id;
     private String title;
     private String content;
-    private String filename;
-    private int note_id;
-    private int timestamp;
+    private long timestamp;
 
 
-    public Note(int id, String title, String content, int timestamp, String filename, int note_id) {
+    public Note(int id, String title, String content, long timestamp) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.timestamp = timestamp;
-        this.filename = filename;
-        this.note_id = note_id;
     }
+
     public Note() {}
 
-    public int getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(int timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
 
     public int getId() {
         return id;
@@ -58,13 +42,15 @@ public class Note {
         this.content = content;
     }
 
-    public int getNote_id() {
-        return note_id;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setNote_id(int note_id) {
-        this.note_id = note_id;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
+
+
 
     @Override
     public String toString() {
@@ -72,11 +58,7 @@ public class Note {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", filename='" + filename + '\'' +
-                ", note_id=" + note_id +
                 ", timestamp=" + timestamp +
                 '}';
     }
 }
-
-
