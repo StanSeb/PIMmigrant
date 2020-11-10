@@ -92,7 +92,7 @@ header img {
   }
 
 .list-container{
-    width: 80%;
+    width: 30%;
 }
 
 .notes-container {
@@ -102,7 +102,7 @@ header img {
 }
 
 .notes-list{
-    height: 447px;
+    height: 473px;
     overflow-y: auto;
 }
 
@@ -202,9 +202,25 @@ header img {
     outline: none;
 }
 
+@media only screen and (max-width: 1700px){
+    .note{
+        width: 70%;
+    }
+}   
+
 @media only screen and (max-width: 1500px){
     .search-bar{
-        width: 90%;
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 1300px){
+    .list-container{
+        width: 100%;
+    }
+
+    .notes-container{
+        width: 95%;
     }
 }
 
@@ -214,19 +230,9 @@ header img {
     }
 }   
 
-@media only screen and (max-width: 1300px){
-    .list-container{
-        width: 100%;
-    }
-
-    .notes-container{
-        width: 100%;
-    }
-}
-
-@media only screen and (max-width: 940px){
+@media only screen and (max-width: 1006px){
     .note {
-        width: 50%;
+        width: 70%;
     }
 
     .choice-container{

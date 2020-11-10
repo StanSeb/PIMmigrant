@@ -41,7 +41,7 @@ public class Database {
 
             Note[] tempList = (Note[]) Utils.readResultSetToObject(rs, Note[].class);
             notes = List.of(tempList);
-            System.out.println(notes);
+            //System.out.println(notes);
 
         } catch (SQLException | JsonProcessingException throwables) {
             throwables.printStackTrace();
