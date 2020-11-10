@@ -49,37 +49,4 @@ public class Database {
         return notes;
     }
 
-    public void updateNote(Note note){
-        try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE notes SET title = ?, content = ?, timestamp = ? WHERE notes.id = ?");
-            PreparedStatement stmt1 = conn.prepareStatement("UPDATE files SET filename = ? WHERE files.note_id = ?");
-            stmt.setString(1, note.getTitle());
-            stmt.setString(2, note.getContent());
-            stmt.setLong(3, note.getTimestamp());
-            stmt.setInt(4, note.getId());
-            stmt1.setString(1, note.getFilename());
-            stmt1.setInt(2, note.getId());
-
-            stmt.executeUpdate();
-            stmt1.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-    }
-
-    public void deleteNote(Note note) {
-        try {
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM notes  WHERE notes.id = ?");
-            PreparedStatement stmt1 = conn.prepareStatement("DELETE FROM files WHERE files.note_id = ?");
-            stmt.setInt(1, note.getId());
-            stmt1.setInt(1, note.getId());
-
-            stmt.executeUpdate();
-            stmt1.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
 }
