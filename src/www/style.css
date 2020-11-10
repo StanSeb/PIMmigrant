@@ -23,6 +23,12 @@ header img {
     height: auto;
 }
 
+.main-container{
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+}
+
 .search-container{
     margin: 0 auto;
     margin-bottom: 2rem;
@@ -31,7 +37,8 @@ header img {
 .search-bar{
     display: flex;
     margin: 0 auto;
-    width: 100%;
+    width: 50%;
+    float: left;
     border: 0.5px solid rgb(209, 209, 209);  
 }
 
@@ -66,7 +73,7 @@ header img {
 }
 
 ::-webkit-scrollbar {
-    width: 15px;
+    width: 10px;
     transition: 0.2s ease;
   }
   
@@ -84,15 +91,18 @@ header img {
     border: 2px solid rgb(228,201,49);
   }
 
+.list-container{
+    width: 80%;
+}
 
 .notes-container {
     margin: 1rem;
     display: flex;
+    width: 80%;
 }
 
 .notes-list{
     height: 447px;
-    width: 250px;
     overflow-y: auto;
 }
 
@@ -192,3 +202,34 @@ header img {
     outline: none;
 }
 
+@media only screen and (max-width: 1500px){
+    .search-bar{
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 1065px){
+    .note{
+        width: 70%;
+    }
+}   
+
+@media only screen and (max-width: 1300px){
+    .list-container{
+        width: 100%;
+    }
+
+    .notes-container{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 940px){
+    .note {
+        width: 50%;
+    }
+
+    .choice-container{
+        left:0%;
+    }
+}
