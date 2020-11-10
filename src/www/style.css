@@ -72,6 +72,14 @@ header img {
     transform: scale(1.1);
 }
 
+.file-upload__input {
+    display: none;
+}
+
+.file-upload__label {
+}
+
+
 ::-webkit-scrollbar {
     width: 10px;
     transition: 0.2s ease;

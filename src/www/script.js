@@ -1,18 +1,31 @@
+async function attach(e) {
+    e.preventDefault();
+    let files = document.querySelector('.add-btn').getNotes;
+    let formData = new FormData();
+    formData.append('file', file.name);
+    await fetch('/upload.php', {method: "POST", body: formData});
+    alert("upload complete");
+}
+
 let notesArray = [];
 
+// Communication between js and the server
 async function getNotes() {
-    let result = await fetch("/rest/Notes");
-    notesArray = await result.json();
+    let result = await fetch("/rest/Notes");  // answer from server
+    notesArray = await result.json();  // converting from json to js object
+    
+    // Every fetch looks like this
 
     renderNotes();
     assignDeleteButtons();
 }
 
 function renderNotes() {
-    var noteList = document.querySelector("#notes-list");
+    var noteList = document.querySelector("#notes-list"); // Element containing Notes
 
-    noteList.innerHTML = '';
+    noteList.innerHTML = ""; // Empty note list
 
+    // This block of code will loop all notes from notesArray into noteList.innerHTML, 
     for (let note of notesArray) {
         let date = new Date(note.timestamp).toLocaleString();
 
@@ -101,6 +114,29 @@ async function addNote() {
 
     }
 }
+
+// Attach file button
+Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), function (button) { 
+    const hiddenInput = button.parentElement.querySelector(".file-upload__input");
+    const label = button.parentElement.querySelector(".file-upload__label");
+    const defaultLabelText = "No file(s) selected";
+
+    // Set default text for label
+    label.textContent = defaultLabelText;
+    label.title = defaultLabelText;
+
+    button.addEventListener("click", function() {
+        hiddenInput.click();
+    });
+
+    hiddenInput.addEventListener("change", function() {
+        const fileNameList = Array.prototype.map.call(hiddenInput.files, function (file) {
+            return file.name;
+        });
+
+        label.textContent = fileNameList.join(",")|| defaultLabelText;
+    });
+});
 
 async function deleteNote(index) {
 
