@@ -1,23 +1,13 @@
-async function attach(e) {
-    e.preventDefault();
-    let files = document.querySelector('.add-btn').getNotes;
-    let formData = new FormData();
-    formData.append('file', file.name);
-    await fetch('/upload.php', {method: "POST", body: formData});
-    alert("upload complete");
-}
-
 let notesArray = [];
 
 // Communication between js and the server
 async function getNotes() {
     let result = await fetch("/rest/Notes");  // answer from server
     notesArray = await result.json();  // converting from json to js object
-    
+
     // Every fetch looks like this
 
     renderNotes();
-    assignDeleteButtons();
 }
 
 function renderNotes() {
@@ -29,16 +19,19 @@ function renderNotes() {
     for (let note of notesArray) {
         let date = new Date(note.timestamp).toLocaleString();
 
-        let noteLi =    `<li class="note-li">
+        let noteLi = `<li class="note-li">
+                        <div class="noteli-text">
                         <h2>${note.title}</h2>
                         <h3 id="date">${date}</h3>
-                        <p>${note.content}</p></li>`;
+                        <p>${note.content}</p>
+                        </div>
+                        <img src="${note.imgUrl}" class="thumbnail"></li>`;
 
         noteList.innerHTML += noteLi;
 
     }
 
-    
+
 
     /*let allLi = document.getElementsByTagName("li");
     let i;
@@ -70,23 +63,24 @@ function renderNotes() {
 
 }
 
-function assignDeleteButtons() {
-    listOfButtons = document.getElementsByClassName("delete-btn");
 
-    var parentToDelete = document.getElementsByClassName("div-buttons");
+async function addNote(e) {
+    e.preventDefault();
 
+    let files = document.querySelector('input[type=file]').files;
+    let formData = new FormData();
 
-    for (let index = 0; index < listOfButtons.length; index++) {
-        listOfButtons[index].onclick = function () {
-            parentToDelete[index].parentElement.style.display = "none";
-            deleteNote(index);
-        }
-
+    for(let file of files) {
+        formData.append('files', file, file.name);
     }
-}
+    
+    let uploadResult = await fetch('/api/file-upload', {
+        method: 'POST',
+        body: formData
+    });
+    
+    let imageURL = await uploadResult.text();
 
-
-async function addNote() {
 
     let titleField = document.getElementById("title");
     let inputField = document.getElementById("note");
@@ -95,8 +89,10 @@ async function addNote() {
     let inputFieldValue = inputField.value;
 
     let theBody = JSON.stringify(
-        {title: titleFieldValue,
-            content: inputFieldValue
+        {
+            title: titleFieldValue,
+            content: inputFieldValue,
+            imgUrl: imageURL
         });
 
     if (inputFieldValue == "" && titleFieldValue == "") {
@@ -110,13 +106,15 @@ async function addNote() {
 
         console.log(await result.text());
 
+
+        notesArray.push(theBody);
         getNotes();
 
     }
 }
 
 // Attach file button
-Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), function (button) { 
+Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), function (button) {
     const hiddenInput = button.parentElement.querySelector(".file-upload__input");
     const label = button.parentElement.querySelector(".file-upload__label");
     const defaultLabelText = "No file(s) selected";
@@ -125,53 +123,37 @@ Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), 
     label.textContent = defaultLabelText;
     label.title = defaultLabelText;
 
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
         hiddenInput.click();
     });
 
-    hiddenInput.addEventListener("change", function() {
+    hiddenInput.addEventListener("change", function () {
         const fileNameList = Array.prototype.map.call(hiddenInput.files, function (file) {
             return file.name;
         });
 
-        label.textContent = fileNameList.join(",")|| defaultLabelText;
+        label.textContent = fileNameList.join(",") || defaultLabelText;
     });
 });
 
-async function deleteNote(index) {
 
-    let noteToDelete = notesArray[index].id;
+function search(input) {
 
-    let theBody = {
-        id: noteToDelete
-    }
-
-    console.log(noteToDelete);
-    let result = await fetch("/rest/Notes/id", {
-        method: "DELETE",
-        body: JSON.stringify(theBody)
-    });
-
-    renderNotes();
-}
-
-function search(input){
-    
     let searchlist = $('.note-li');
-    
-    for(let findTitle of searchlist){
+
+    for (let findTitle of searchlist) {
         let foundTitle = $(findTitle).find('h2').text();
-        if(foundTitle.toLowerCase().includes(input.toLowerCase())){
+        if (foundTitle.toLowerCase().includes(input.toLowerCase())) {
             $(findTitle).show();
-        }else{
+        } else {
             $(findTitle).hide();
         }
     }
 }
 
-function clearInput(){
-    document.getElementById('searchbox').value= "";
-    
+function clearInput() {
+    document.getElementById('searchbox').value = "";
+
     renderNotes();
 }
 

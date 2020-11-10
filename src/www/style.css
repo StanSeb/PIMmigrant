@@ -72,14 +72,6 @@ header img {
     transform: scale(1.1);
 }
 
-.file-upload__input {
-    display: none;
-}
-
-.file-upload__label {
-}
-
-
 ::-webkit-scrollbar {
     width: 10px;
     transition: 0.2s ease;
@@ -120,21 +112,27 @@ header img {
     margin-top: 1rem;
     font-size: 12px;
     list-style-type: none;
+    display: flex;
+    justify-content: space-between;
 }
 
-.note-li h2{
+.noteli-text h2{
     font-size: 15px;
     font-weight: bold;
     margin-bottom: 0.5rem;
 }
-
-
 
 .note-li:hover{
     cursor: pointer;
     -moz-box-shadow:     inset 0 0 7px #cacaca;
     -webkit-box-shadow:  inset 0 0 7px #cacaca;
     box-shadow:          inset 0 0 7px #cacaca;
+}
+
+.thumbnail {
+    width: 100px;
+    height: auto;
+    border: 0;
 }
 
 #date {
@@ -175,8 +173,9 @@ header img {
 .choice-container{
     display: flex;
     flex-direction: row;
-    margin: 0 auto;
+    margin-left: 0;
     margin-top: 0.25rem;
+    align-items: center;
 }
 
 .choice-container button{
@@ -185,8 +184,7 @@ header img {
     border: none;
     border-radius: 0;
     margin-top: 0.25rem;
-    margin-right: 0.5rem;
-    margin-left: 0.5rem;
+    margin-right: 1rem;
     background: rgb(238, 215, 82);
     color: white;
     font-size: 140%;
@@ -204,6 +202,15 @@ header img {
 .choice-container button:active{
     transform: scale(1.1);
     outline: none;
+}
+
+.file-upload__input {
+    display: none;
+}
+
+.file-upload__label {
+    color: rgb(163, 163, 163);
+    font-size: 75%;
 }
 
 @media only screen and (max-width: 1700px){
@@ -237,5 +244,11 @@ header img {
 @media only screen and (max-width: 1006px){
     .note {
         width: 70%;
+    }
+}
+
+@media only screen and (max-width: 630px){
+    .note {
+        width: 5s0%;
     }
 }

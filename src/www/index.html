@@ -37,23 +37,18 @@
             </div>
 
             <section class="note">
-                <input type="text" placeholder="Title" id="title" required>
+                <input type="text" placeholder="Add a title" id="title" required>
 
-                <textarea name="note" id="note" cols="105" rows="27"required></textarea>
-                
+                <textarea name="note" id="note" placeholder="Make your note here..." cols="150" rows="27"
+                    required></textarea>
+
                 <div class="choice-container">
+                    <button class="save-btn" onclick="addNote(event)"><i class="fas fa-save"></i></button>
                     <button class="delete-btn"><i class="fas fa-trash"></i></button>
-                    <button class="save-btn" onclick="addNote()"><i class="fas fa-save"></i></button>
-
-
-                    <input class="file-upload__input" type="file" name="user-file[]" id="save-btn"  multiple>
+                    <input class="file-upload__input" type="file" name="user-file[]" id="save-btn" multiple>
                     <button class="file-upload__button" type="button"><i class="fas fa-paperclip"></i></button>
                     <span class="file-upload__label">No file(s) selected</span>
-                    
-                        
-                    
-                </input>
-                    
+                    </input>
                 </div>
             </section>
 

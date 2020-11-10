@@ -6,13 +6,17 @@ public class Note {
     private String title;
     private String content;
     private long timestamp;
+    private String imgUrl;
+    private int note_id;
 
 
-    public Note(int id, String title, String content, long timestamp) {
+    public Note(int id, String title, String content, long timestamp, String imgUrl, int note_id) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.timestamp = timestamp;
+        this.imgUrl = imgUrl;
+        this.note_id = note_id;
     }
 
     public Note() {}
@@ -50,7 +54,21 @@ public class Note {
         this.timestamp = timestamp;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
 
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public int getNote_id() {
+        return note_id;
+    }
+
+    public void setNote_id(int note_id) {
+        this.note_id = note_id;
+    }
 
     @Override
     public String toString() {
@@ -59,6 +77,8 @@ public class Note {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", timestamp=" + timestamp +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", note_id=" + note_id +
                 '}';
     }
 }
