@@ -120,9 +120,7 @@ header img {
     margin-bottom: 0.5rem;
 }
 
-.note-li button{
-    display: none;
-}
+
 
 .note-li:hover{
     cursor: pointer;
@@ -170,8 +168,6 @@ header img {
     display: flex;
     flex-direction: row;
     margin: 0 auto;
-    position: relative;
-    left: 40%;
     margin-top: 0.25rem;
 }
 
@@ -233,9 +229,5 @@ header img {
 @media only screen and (max-width: 1006px){
     .note {
         width: 70%;
-    }
-
-    .choice-container{
-        left:0%;
     }
 }
