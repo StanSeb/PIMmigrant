@@ -16,7 +16,7 @@ function renderNotes() {
     for (let note of notesArray) {
         let date = (new Date()).toDateString();
 
-        let noteLi =    `<li class="note-li">
+        let noteLi =    `<li class="note-li" onclick="noteClicked(${note.id})">
                         <h2>${note.title}</h2>
                         <h3>${date}</h3>
                         <p>${note.content}</p></li>`;
@@ -52,6 +52,33 @@ function renderNotes() {
     }
     */
 
+}
+
+
+
+function getNoteById(noteId) {
+
+    for(note of notesArray) {
+        if(note.id == noteId){
+            return note;
+        } 
+    }
+}
+
+
+
+function noteClicked(noteId) {
+
+    //1. Hämta ut vald anteckning.
+    //2. Hämta ut content från anteckningen.
+    //3. Sätta texten i textfältet till content.
+
+    let note = getNoteById(noteId);
+    let noteContent = note.content;
+    let htmlContent = document.querySelector("#note");
+
+    htmlContent.value = noteContent;
+    
 }
 
 function assignDeleteButtons() {
@@ -137,4 +164,44 @@ function clearInput(){
     document.getElementById('searchbox').value= "";
     
     renderNotes();
+}
+
+
+
+
+
+
+
+Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), function (button) { 
+    const hiddenInput = button.parentElement.querySelector(".file-upload__input");
+    const label = button.parentElement.querySelector(".file-upload__label");
+    const defaultLabelText = "No file(s) selected";
+
+    // Set default text for label
+    label.textContent = defaultLabelText;
+    label.title = defaultLabelText;
+
+    button.addEventListener("click", function() {
+        hiddenInput.click();
+    });
+
+    hiddenInput.addEventListener("change", function() {
+        const fileNameList = Array.prototype.map.call(hiddenInput.files, function (file) {
+            return file.name;
+        });
+
+        label.textContent = fileNameList.join(",")|| defaultLabelText;
+    });
+});
+
+
+
+
+
+    var list = document.getElementsByTagName("li");
+for(var i=0; i<list.length; i++){
+ list[i].addEventListener("click", liClick);
+}
+function liClick(){
+  this.classList.toggle("done");
 }

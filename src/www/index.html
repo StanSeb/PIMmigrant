@@ -28,7 +28,11 @@
                     </div>
                 </div>
 
-                <aside class="notes-list" id="notes-list"></aside>
+                <aside class="notes-list" id="notes-list">
+               </aside>
+
+
+
 
             </div>            
 
@@ -41,6 +45,11 @@
                     <button class="save-btn" onclick="addNote()"><i class="fas fa-save"></i></button>
                     <button class="add-btn"><i class="fas fa-paperclip"></i></i></button>
                     <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                    
+                    <input class="file-upload__input" type="file" name="user-file[]" id="save-btn"  multiple>
+                    <button class="file-upload__button" type="button"><i class="fas fa-paperclip"></i></button>
+                    <span class="file-upload__label">No file(s) selected</span>
+
                 </div>
             </section>
 
@@ -53,6 +62,11 @@
     <script>
         window.onload = getNotes();
     </script>
+
+
+
+</div>
+
 </body>
 
 </html>

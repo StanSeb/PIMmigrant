@@ -94,14 +94,21 @@ header img {
     height: 447px;
     width: 250px;
     overflow-y: auto;
+    
 }
 
 .note-li {
     padding: 0.5rem;
     border-bottom: 0.5px solid rgb(206, 206, 206);
     margin-top: 1rem;
-    font-size: 12px;
+    font-size: 7px;
     list-style-type: none;
+    transition: transform .2s;
+}
+
+.note-li:hover {
+    transform: scale(1.5);
+    transform-origin: 10%;
 }
 
 .note-li h2{
@@ -177,4 +184,12 @@ header img {
 .choice-container button:active{
     transform: scale(1.1);
     outline: none;
+}
+
+.file-upload__input {
+    display: none;
+}
+
+.file-upload__label {
+    
 }
