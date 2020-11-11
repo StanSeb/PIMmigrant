@@ -130,9 +130,16 @@ header img {
 }
 
 .thumbnail {
-    width: 100px;
-    height: auto;
+    width: auto;
+    height: 75px;
     border: 0;
+}
+
+.note-li i {
+    font-size: 30px;
+    color: rgb(228, 201, 49);
+    margin: 0;
+    padding: 0;
 }
 
 #date {

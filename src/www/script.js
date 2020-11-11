@@ -17,20 +17,28 @@ function renderNotes() {
 
     // This block of code will loop all notes from notesArray into noteList.innerHTML, 
     for (let note of notesArray) {
-        let date = new Date(note.timestamp).toLocaleString();
 
+        let date = new Date(note.timestamp).toLocaleString();
         let noteLi = `<li class="note-li">
                         <div class="noteli-text">
                         <h2>${note.title}</h2>
                         <h3 id="date">${date}</h3>
                         <p>${note.content}</p>
-                        </div>
-                        <img src="${note.imgUrl}" class="thumbnail" alt=""></li>`;
+                        </div>`;
+
+        if(note.imgUrl ===""){
+            note.imgUrl = "";
+        }                
+
+        else if(note.imgUrl.includes(".jpeg") || note.imgUrl.includes(".PNG") || note.imgUrl.includes(".svg") ||
+                note.imgUrl.includes(".TIFF") || note.imgUrl.includes(".BMP")) {
+            noteLi += `<img src=${note.imgUrl} class="thumbnail"></li>`;
+        }else{
+            noteLi += `<i class="far fa-file"></i></li>`;
+        } 
 
         noteList.innerHTML += noteLi;
-
     }
-    
 }
 
 
