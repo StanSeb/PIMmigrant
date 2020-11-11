@@ -25,42 +25,12 @@ function renderNotes() {
                         <h3 id="date">${date}</h3>
                         <p>${note.content}</p>
                         </div>
-                        <img src="${note.imgUrl}" class="thumbnail"></li>`;
+                        <img src="${note.imgUrl}" class="thumbnail" alt=""></li>`;
 
         noteList.innerHTML += noteLi;
 
     }
-
-
-
-    /*let allLi = document.getElementsByTagName("li");
-    let i;
-
-    for (i = 0; i < allLi.length; i++) {
-
-        const divButtons = document.createElement("DIV");
-        const addButton = document.createElement("button");
-        const saveButton = document.createElement("button");
-        const deleteButton = document.createElement("button");
-
-        addButton.className = "add-btn";
-        saveButton.className = "save-btn";
-        deleteButton.className = "delete-btn";
-        divButtons.className = "div-buttons";
-
-        saveButton.innerHTML = '<i class="fas fa-save"></i>';
-        addButton.innerHTML = '<i class="fas fa-paperclip"></i>';
-        deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
-
-        divButtons.appendChild(addButton);
-        divButtons.appendChild(saveButton);
-        divButtons.appendChild(deleteButton);
-
-        allLi[i].appendChild(divButtons);
-
-    }
-    */
-
+    
 }
 
 
@@ -141,12 +111,13 @@ function search(input) {
 
     let searchlist = $('.note-li');
 
-    for (let findTitle of searchlist) {
-        let foundTitle = $(findTitle).find('h2').text();
-        if (foundTitle.toLowerCase().includes(input.toLowerCase())) {
-            $(findTitle).show();
+    for (let findText of searchlist) {
+        let foundText = $(findText).find('h2').text();
+
+        if (foundText.toLowerCase().includes(input.toLowerCase())) {
+            $(findText).show();
         } else {
-            $(findTitle).hide();
+            $(findText).hide();
         }
     }
 }
