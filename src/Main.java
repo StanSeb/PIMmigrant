@@ -13,59 +13,12 @@ public class Main {
         Express app = new Express();
         Database db = new Database();
 
-        app.post("/api/imgs", (req, res)->{
-            String fileName = null;
-
-            try {
-                List<FileItem> files = req.getFormData("files");
-                fileName = db.uploadImage(files.get(0));
-                /////Upload image function finns som mall i Database Class.
-
-        }catch (Exception e){
-            /// no image upploaded
-            e.printStackTrace();
-            }
-        res.send(fileName);
-
-        });
-
         app.get("/rest/Notes",(req, res) ->{
            List<Note> notes = db.getAllNotes();
 
            res.json(notes);
         });
 
-        app.get("/rest/Notes/:title", (req, res)->{
-
-            String title = req.getParam("title");
-
-            Note notes = db.getNoteByTitle(title);
-
-            res.json(notes);
-
-        });
-
-        app.post("/rest/Notes",(req, res)->{
-
-            Note note = (Note) req.getBody(Note.class);
-
-            System.out.println(note.toString());
-
-            db.updateNote(note);
-
-
-        });
-
-        app.delete("/rest/Notes",(req, res)->{
-
-            Note note = (Note) req.getBody(Note.class);
-
-            System.out.println(note.toString());
-
-            db.deleteNote(note);
-
-
-        });
 
         app.post("/rest/Notes",(req, res)->{
 
@@ -75,9 +28,29 @@ public class Main {
 
             db.createNotes(note);
 
+        });
+
+        app.post("/api/file-upload", (request, response) -> {
+           String imageUrl = null;
+
+           try{
+               List<FileItem> files = request.getFormData("files");
+               imageUrl = db.uploadImage(files.get(0));
+           }catch (Exception e){e.printStackTrace();}
+
+            response.send(imageUrl);
+        });
+
+
+        app.get("/rest/Notes/:id", (req, res)->{
+
+            int id = Integer.parseInt(req.getParam("id"));
+
+            Note notes = db.getNoteById(id);
+
+            res.json(notes);
 
         });
-        //////////////////////////
 
 
         try{

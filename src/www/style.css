@@ -23,6 +23,12 @@ header img {
     height: auto;
 }
 
+.main-container{
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+}
+
 .search-container{
     margin: 0 auto;
     margin-bottom: 2rem;
@@ -31,7 +37,8 @@ header img {
 .search-bar{
     display: flex;
     margin: 0 auto;
-    width: 100%;
+    width: 50%;
+    float: left;
     border: 0.5px solid rgb(209, 209, 209);  
 }
 
@@ -66,7 +73,7 @@ header img {
 }
 
 ::-webkit-scrollbar {
-    width: 15px;
+    width: 10px;
     transition: 0.2s ease;
   }
   
@@ -84,41 +91,61 @@ header img {
     border: 2px solid rgb(228,201,49);
   }
 
+.list-container{
+    width: 30%;
+}
 
 .notes-container {
     margin: 1rem;
     display: flex;
+    width: 80%;
 }
 
 .notes-list{
-    height: 447px;
-    width: 250px;
+    height: 473px;
     overflow-y: auto;
-    
 }
 
 .note-li {
     padding: 0.5rem;
     border-bottom: 0.5px solid rgb(206, 206, 206);
     margin-top: 1rem;
-    font-size: 7px;
+    font-size: 12px;
     list-style-type: none;
-    transition: transform .2s;
+    display: flex;
+    justify-content: space-between;
 }
 
-.note-li:hover {
-    transform: scale(1.5);
-    transform-origin: 10%;
-}
-
-.note-li h2{
+.noteli-text h2{
     font-size: 15px;
     font-weight: bold;
     margin-bottom: 0.5rem;
 }
 
-.note-li button{
-    display: none;
+.note-li:hover{
+    cursor: pointer;
+    -moz-box-shadow:     inset 0 0 7px #cacaca;
+    -webkit-box-shadow:  inset 0 0 7px #cacaca;
+    box-shadow:          inset 0 0 7px #cacaca;
+}
+
+.thumbnail {
+    width: auto;
+    height: 75px;
+    border: 0;
+}
+
+.note-li i {
+    font-size: 30px;
+    color: rgb(228, 201, 49);
+    margin: 0;
+    padding: 0;
+}
+
+#date {
+    font-size: 105%;
+    margin-bottom: 0.5rem;
+    color: rgb(110, 110, 110);
 }
 
 .note {
@@ -153,10 +180,9 @@ header img {
 .choice-container{
     display: flex;
     flex-direction: row;
-    margin: 0 auto;
-    position: relative;
-    left: 40%;
+    margin-left: 0;
     margin-top: 0.25rem;
+    align-items: center;
 }
 
 .choice-container button{
@@ -165,8 +191,7 @@ header img {
     border: none;
     border-radius: 0;
     margin-top: 0.25rem;
-    margin-right: 0.5rem;
-    margin-left: 0.5rem;
+    margin-right: 1rem;
     background: rgb(238, 215, 82);
     color: white;
     font-size: 140%;
@@ -191,5 +216,54 @@ header img {
 }
 
 .file-upload__label {
-    
+    color: rgb(163, 163, 163);
+    font-size: 75%;
+}
+
+@media only screen and (max-width: 1700px){
+    .note{
+        width: 70%;
+    }
+}   
+
+@media only screen and (max-width: 1500px){
+    .search-bar{
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 1300px){
+    .list-container{
+        width: 100%;
+    }
+
+    .notes-container{
+        width: 95%;
+    }
+}
+
+@media only screen and (max-width: 1065px){
+    .note{
+        width: 70%;
+    }
+}   
+
+@media only screen and (max-width: 1006px){
+    .note {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 900px){
+    .thumbnail {
+        width: 50px;
+        height: 50px;
+        border: none;
+    }
+}
+
+@media only screen and (max-width: 630px){
+    .note {
+        width: 50%;
+    }
 }

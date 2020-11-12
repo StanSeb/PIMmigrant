@@ -1,60 +1,45 @@
 let notesArray = [];
 
+// Communication between js and the server
 async function getNotes() {
-    let result = await fetch("/rest/Notes");
-    notesArray = await result.json();
+    let result = await fetch("/rest/Notes");  // answer from server
+    notesArray = await result.json();  // converting from json to js object
+
+    // Every fetch looks like this
 
     renderNotes();
-    assignDeleteButtons();
 }
 
 function renderNotes() {
-    var noteList = document.querySelector("#notes-list");
+    var noteList = document.querySelector("#notes-list"); // Element containing Notes
 
-    noteList.innerHTML = '';
+    noteList.innerHTML = ""; // Empty note list
 
+    // This block of code will loop all notes from notesArray into noteList.innerHTML, 
     for (let note of notesArray) {
-        let date = (new Date()).toDateString();
 
-        let noteLi =    `<li class="note-li" onclick="noteClicked(${note.id})">
+        let date = new Date(note.timestamp).toLocaleString();
+        let noteLi = `<li class="note-li" onclick="noteClicked(${note.id})">
+                        <div class="noteli-text">
                         <h2>${note.title}</h2>
-                        <h3>${date}</h3>
-                        <p>${note.content}</p></li>`;
+                        <h3 id="date">${date}</h3>
+                        <p>${note.content}</p>
+                        </div>`;
+
+        if(note.imgUrl ===""){
+            note.imgUrl = "";
+        }                
+
+        else if(note.imgUrl.includes(".jpeg") || note.imgUrl.includes(".PNG") || note.imgUrl.includes(".svg") ||
+                note.imgUrl.includes(".TIFF") || note.imgUrl.includes(".BMP")) {
+            noteLi += `<img src=${note.imgUrl} class="thumbnail"></li>`;
+        }else{
+            noteLi += `<i class="far fa-file"></i></li>`;
+        } 
 
         noteList.innerHTML += noteLi;
     }
-
-    /*let allLi = document.getElementsByTagName("li");
-    let i;
-
-    for (i = 0; i < allLi.length; i++) {
-
-        const divButtons = document.createElement("DIV");
-        const addButton = document.createElement("button");
-        const saveButton = document.createElement("button");
-        const deleteButton = document.createElement("button");
-
-        addButton.className = "add-btn";
-        saveButton.className = "save-btn";
-        deleteButton.className = "delete-btn";
-        divButtons.className = "div-buttons";
-
-        saveButton.innerHTML = '<i class="fas fa-save"></i>';
-        addButton.innerHTML = '<i class="fas fa-paperclip"></i>';
-        deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
-
-        divButtons.appendChild(addButton);
-        divButtons.appendChild(saveButton);
-        divButtons.appendChild(deleteButton);
-
-        allLi[i].appendChild(divButtons);
-
-    }
-    */
-
 }
-
-
 
 function getNoteById(noteId) {
 
@@ -64,8 +49,6 @@ function getNoteById(noteId) {
         } 
     }
 }
-
-
 
 function noteClicked(noteId) {
 
@@ -85,36 +68,35 @@ function noteClicked(noteId) {
     
 }
 
-function assignDeleteButtons() {
-    listOfButtons = document.getElementsByClassName("delete-btn");
+async function addNote(e) {
+    e.preventDefault();
 
-    var parentToDelete = document.getElementsByClassName("div-buttons");
+    let files = document.querySelector('input[type=file]').files;
+    let formData = new FormData();
 
-
-    for (let index = 0; index < listOfButtons.length; index++) {
-        listOfButtons[index].onclick = function () {
-            parentToDelete[index].parentElement.style.display = "none";
-            deleteNote(index);
-        }
-
+    for(let file of files) {
+        formData.append('files', file, file.name);
     }
-}
+    
+    let uploadResult = await fetch('/api/file-upload', {
+        method: 'POST',
+        body: formData
+    });
+    
+    let imageURL = await uploadResult.text();
 
-
-async function addNote() {
 
     let titleField = document.getElementById("title");
     let inputField = document.getElementById("note");
-    let timeStamp = document.getElementsByName("h3");
 
     let titleFieldValue = titleField.value;
     let inputFieldValue = inputField.value;
-    let timeStampValute = timeStamp.value;
 
     let theBody = JSON.stringify(
-        {title: titleFieldValue,
+        {
+            title: titleFieldValue,
             content: inputFieldValue,
-            timestamp: timeStampValute
+            imgUrl: imageURL
         });
 
     if (inputFieldValue == "" && titleFieldValue == "") {
@@ -128,55 +110,15 @@ async function addNote() {
 
         console.log(await result.text());
 
+
+        notesArray.push(theBody);
         getNotes();
 
     }
 }
 
-async function deleteNote(index) {
-
-    let noteToDelete = notesArray[index].id;
-
-    let theBody = {
-        id: noteToDelete
-    }
-
-    console.log(noteToDelete);
-    let result = await fetch("/rest/Notes/id", {
-        method: "DELETE",
-        body: JSON.stringify(theBody)
-    });
-
-    renderNotes();
-}
-
-function search(input){
-    
-    let searchlist = $('.note-li');
-    
-    for(let findTitle of searchlist){
-        let foundTitle = $(findTitle).find('h2').text();
-        if(foundTitle.toLowerCase().includes(input.toLowerCase())){
-            $(findTitle).show();
-        }else{
-            $(findTitle).hide();
-        }
-    }
-}
-
-function clearInput(){
-    document.getElementById('searchbox').value= "";
-    
-    renderNotes();
-}
-
-
-
-
-
-
-
-Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), function (button) { 
+// Attach file button
+Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), function (button) {
     const hiddenInput = button.parentElement.querySelector(".file-upload__input");
     const label = button.parentElement.querySelector(".file-upload__label");
     const defaultLabelText = "No file(s) selected";
@@ -185,27 +127,37 @@ Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), 
     label.textContent = defaultLabelText;
     label.title = defaultLabelText;
 
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
         hiddenInput.click();
     });
 
-    hiddenInput.addEventListener("change", function() {
+    hiddenInput.addEventListener("change", function () {
         const fileNameList = Array.prototype.map.call(hiddenInput.files, function (file) {
             return file.name;
         });
 
-        label.textContent = fileNameList.join(",")|| defaultLabelText;
+        label.textContent = fileNameList.join(",") || defaultLabelText;
     });
 });
 
 
+function search(input) {
 
+    let searchlist = $('.note-li');
 
+    for (let findText of searchlist) {
+        let foundText = $(findText).find('h2').text();
 
-    var list = document.getElementsByTagName("li");
-for(var i=0; i<list.length; i++){
- list[i].addEventListener("click", liClick);
+        if (foundText.toLowerCase().includes(input.toLowerCase())) {
+            $(findText).show();
+        } else {
+            $(findText).hide();
+        }
+    }
 }
-function liClick(){
-  this.classList.toggle("done");
+
+function clearInput() {
+    document.getElementById('searchbox').value = "";
+
+    renderNotes();
 }
