@@ -75,9 +75,13 @@ function noteClicked(noteId) {
 
     let note = getNoteById(noteId);
     let noteContent = note.content;
+    let noteTitle = note.title;
+    
     let htmlContent = document.querySelector("#note");
+    let htmlTitle = document.querySelector("#title");
 
     htmlContent.value = noteContent;
+    htmlTitle.value = noteTitle;
     
 }
 
