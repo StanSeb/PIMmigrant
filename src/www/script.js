@@ -42,7 +42,6 @@ function renderNotes() {
 }
 
 function getNoteById(noteId) {
-
     for(note of notesArray) {
         if(note.id == noteId){
             return note;
@@ -50,22 +49,17 @@ function getNoteById(noteId) {
     }
 }
 
-function noteClicked(noteId) {
-
-    //1. Hämta ut vald anteckning.
-    //2. Hämta ut content från anteckningen.
-    //3. Sätta texten i textfältet till content.
+async function noteClicked(noteId) {
 
     let note = getNoteById(noteId);
-    let noteContent = note.content;
-    let noteTitle = note.title;
     
-    let htmlContent = document.querySelector("#note");
-    let htmlTitle = document.querySelector("#title");
+        let result = await fetch("/rest/Notes/" + note.id, {
+            method: "GET"
+        });
 
-    htmlContent.value = noteContent;
-    htmlTitle.value = noteTitle;
+        console.log(await result.text());
 
+        getNotes();
 }
 
 async function addNote(e) {
