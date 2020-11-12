@@ -35,10 +35,27 @@ public class Main {
 
            try{
                List<FileItem> files = request.getFormData("files");
-               imageUrl = db.uploadImage(files.get(0));
+
+               if(!(files == null)){
+                   imageUrl = db.uploadImage(files.get(0));
+               }else{
+                   System.out.println("No file added.");
+               }
+
            }catch (Exception e){e.printStackTrace();}
 
             response.send(imageUrl);
+        });
+
+
+        app.get("/rest/Notes/:id", (req, res)->{
+
+            int id = Integer.parseInt(req.getParam("id"));
+
+            Note notes = db.getNoteById(id);
+
+            res.json(notes);
+
         });
 
 
