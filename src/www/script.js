@@ -65,7 +65,7 @@ function noteClicked(noteId) {
 
     htmlContent.value = noteContent;
     htmlTitle.value = noteTitle;
-    
+
 }
 
 async function addNote(e) {
@@ -75,7 +75,7 @@ async function addNote(e) {
     let formData = new FormData();
 
     for(let file of files) {
-        formData.append('files', file, file.name);
+            formData.append('files', file, file.name);
     }
     
     let uploadResult = await fetch('/api/file-upload', {
@@ -84,7 +84,7 @@ async function addNote(e) {
     });
     
     let imageURL = await uploadResult.text();
-
+    
 
     let titleField = document.getElementById("title");
     let inputField = document.getElementById("note");
@@ -99,9 +99,13 @@ async function addNote(e) {
             imgUrl: imageURL
         });
 
-    if (inputFieldValue == "" && titleFieldValue == "") {
-        alert("The fields can not be empty!");
-    } else {
+    if (titleFieldValue === "") {
+        alert("Please enter a title.");
+    }
+    else if (inputFieldValue === ""){
+        alert("Please write something in the note window or add a file.")
+    }
+    else {
 
         let result = await fetch("/rest/Notes", {
             method: "POST",

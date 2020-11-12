@@ -35,7 +35,13 @@ public class Main {
 
            try{
                List<FileItem> files = request.getFormData("files");
-               imageUrl = db.uploadImage(files.get(0));
+
+               if(!(files == null)){
+                   imageUrl = db.uploadImage(files.get(0));
+               }else{
+                   System.out.println("No file added.");
+               }
+
            }catch (Exception e){e.printStackTrace();}
 
             response.send(imageUrl);
