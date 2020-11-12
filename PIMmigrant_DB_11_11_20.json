@@ -1,0 +1,94 @@
+{
+    "type": "database",
+    "name": "PIMmigrant_DB",
+    "objects": [
+        {
+            "type": "table",
+            "database": null,
+            "name": "notes",
+            "withoutRowId": true,
+            "ddl": "CREATE TABLE notes (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, title TEXT NOT NULL, content TEXT, timestamp INTEGER NOT NULL, imgUrl TEXT)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                },
+                {
+                    "name": "title",
+                    "type": "TEXT",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "content",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "imgUrl",
+                    "type": "TEXT"
+                }
+            ],
+            "rows": [
+                [
+                    18,
+                    "TimeStamp Test",
+                    "Local time - 14:46",
+                    1605102401430,
+                    ""
+                ],
+                [
+                    19,
+                    "Image test 1",
+                    "This is an image",
+                    1605102428833,
+                    "\/uploads\/AdobeStock_384705993.jpeg"
+                ],
+                [
+                    20,
+                    "Image test 2",
+                    "This is another picture",
+                    1605102463397,
+                    "\/uploads\/AdobeStock_200134670.jpeg"
+                ],
+                [
+                    21,
+                    "One more image",
+                    "One more time",
+                    1605102564513,
+                    "\/uploads\/200907.PNG"
+                ],
+                [
+                    22,
+                    "File add test",
+                    "Can I see the file here?",
+                    1605102688246,
+                    "\/uploads\/SYSJM4_OP1_-_Projektuppgift_i_grupper_-_PIM-Notes.docx"
+                ]
+            ]
+        }
+    ]
+}
