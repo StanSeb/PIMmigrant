@@ -21,7 +21,7 @@
             <div class="list-container">
                 <div class="search-container">
                     <div class="search-bar">
-                        <input type="text" placeholder="Search..." class="searchbox" id="searchbox"
+                        <input type="text" placeholder="Search note by title" class="searchbox" id="searchbox"
                             onkeyup="search(this.value)">
                         <div class="search-buttons">
                             <button class="cross-icon" id="clear" onclick="clearInput()"><i
@@ -43,6 +43,7 @@
                     required></textarea>
 
                 <div class="choice-container">
+                    <button class="new-btn" onclick=location.reload(true)><i class="fas fa-plus"></i></button>
                     <button class="save-btn" onclick="addNote(event)"><i class="fas fa-save"></i></button>
                     <button class="delete-btn"><i class="fas fa-trash"></i></button>
                     <input class="file-upload__input" type="file" name="user-file[]" id="save-btn" multiple>
@@ -53,6 +54,19 @@
             </section>
 
         </section>
+
+        <div class="footer">
+            <div class="logotext">
+                <h6>PIMmigrant®</h6>
+            </div>
+            <div class="contributors">
+                <a href="mailto:alexander.kocman94@gmail.com">Alexander</a>  
+                <a href="mailto:alianneelm@yahoo.se">Alianne</a>  
+                <a href="mailto:franne_@hotmail.com">Francisco</a>  
+                <a href="mailto:stanczak.sebastian@gmail.com">Sebastian</a>  
+            </div>
+            
+        </div>
 
     </main>
 

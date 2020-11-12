@@ -17,52 +17,56 @@ function renderNotes() {
 
     // This block of code will loop all notes from notesArray into noteList.innerHTML, 
     for (let note of notesArray) {
-        let date = new Date(note.timestamp).toLocaleString();
 
-        let noteLi = `<li class="note-li">
+        let date = new Date(note.timestamp).toLocaleString();
+        let noteLi = `<li class="note-li" onclick="noteClicked(${note.id})">
                         <div class="noteli-text">
                         <h2>${note.title}</h2>
                         <h3 id="date">${date}</h3>
                         <p>${note.content}</p>
-                        </div>
-                        <img src="${note.imgUrl}" class="thumbnail"></li>`;
+                        </div>`;
+
+        if(note.imgUrl ===""){
+            note.imgUrl = "";
+        }                
+
+        else if(note.imgUrl.includes(".jpeg") || note.imgUrl.includes(".PNG") || note.imgUrl.includes(".svg") ||
+                note.imgUrl.includes(".TIFF") || note.imgUrl.includes(".BMP")) {
+            noteLi += `<img src=${note.imgUrl} class="thumbnail"></li>`;
+        }else{
+            noteLi += `<i class="far fa-file"></i></li>`;
+        } 
 
         noteList.innerHTML += noteLi;
-
     }
-
-
-
-    /*let allLi = document.getElementsByTagName("li");
-    let i;
-
-    for (i = 0; i < allLi.length; i++) {
-
-        const divButtons = document.createElement("DIV");
-        const addButton = document.createElement("button");
-        const saveButton = document.createElement("button");
-        const deleteButton = document.createElement("button");
-
-        addButton.className = "add-btn";
-        saveButton.className = "save-btn";
-        deleteButton.className = "delete-btn";
-        divButtons.className = "div-buttons";
-
-        saveButton.innerHTML = '<i class="fas fa-save"></i>';
-        addButton.innerHTML = '<i class="fas fa-paperclip"></i>';
-        deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
-
-        divButtons.appendChild(addButton);
-        divButtons.appendChild(saveButton);
-        divButtons.appendChild(deleteButton);
-
-        allLi[i].appendChild(divButtons);
-
-    }
-    */
-
 }
 
+function getNoteById(noteId) {
+
+    for(note of notesArray) {
+        if(note.id == noteId){
+            return note;
+        } 
+    }
+}
+
+function noteClicked(noteId) {
+
+    //1. Hämta ut vald anteckning.
+    //2. Hämta ut content från anteckningen.
+    //3. Sätta texten i textfältet till content.
+
+    let note = getNoteById(noteId);
+    let noteContent = note.content;
+    let noteTitle = note.title;
+    
+    let htmlContent = document.querySelector("#note");
+    let htmlTitle = document.querySelector("#title");
+
+    htmlContent.value = noteContent;
+    htmlTitle.value = noteTitle;
+
+}
 
 async function addNote(e) {
     e.preventDefault();
@@ -71,7 +75,7 @@ async function addNote(e) {
     let formData = new FormData();
 
     for(let file of files) {
-        formData.append('files', file, file.name);
+            formData.append('files', file, file.name);
     }
     
     let uploadResult = await fetch('/api/file-upload', {
@@ -80,7 +84,7 @@ async function addNote(e) {
     });
     
     let imageURL = await uploadResult.text();
-
+    
 
     let titleField = document.getElementById("title");
     let inputField = document.getElementById("note");
@@ -95,9 +99,13 @@ async function addNote(e) {
             imgUrl: imageURL
         });
 
-    if (inputFieldValue == "" && titleFieldValue == "") {
-        alert("The fields can not be empty!");
-    } else {
+    if (titleFieldValue === "") {
+        alert("Please enter a title.");
+    }
+    else if (inputFieldValue === ""){
+        alert("Please write something in the note window or add a file.")
+    }
+    else {
 
         let result = await fetch("/rest/Notes", {
             method: "POST",
@@ -141,12 +149,13 @@ function search(input) {
 
     let searchlist = $('.note-li');
 
-    for (let findTitle of searchlist) {
-        let foundTitle = $(findTitle).find('h2').text();
-        if (foundTitle.toLowerCase().includes(input.toLowerCase())) {
-            $(findTitle).show();
+    for (let findText of searchlist) {
+        let foundText = $(findText).find('h2').text();
+
+        if (foundText.toLowerCase().includes(input.toLowerCase())) {
+            $(findText).show();
         } else {
-            $(findTitle).hide();
+            $(findText).hide();
         }
     }
 }
@@ -156,4 +165,3 @@ function clearInput() {
 
     renderNotes();
 }
-
