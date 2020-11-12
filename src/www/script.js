@@ -15,7 +15,7 @@ function renderNotes() {
 
     noteList.innerHTML = ""; // Empty note list
 
-    // This block of code will loop all notes from notesArray into noteList.innerHTML, 
+    // This block of code will loop all notes from notesArray into noteList.innerHTML,
     for (let note of notesArray) {
 
         let date = new Date(note.timestamp).toLocaleString();
@@ -28,14 +28,14 @@ function renderNotes() {
 
         if(note.imgUrl ===""){
             note.imgUrl = "";
-        }                
+        }
 
         else if(note.imgUrl.includes(".jpeg") || note.imgUrl.includes(".PNG") || note.imgUrl.includes(".svg") ||
                 note.imgUrl.includes(".TIFF") || note.imgUrl.includes(".BMP")) {
             noteLi += `<img src=${note.imgUrl} class="thumbnail"></li>`;
         }else{
             noteLi += `<i class="far fa-file"></i></li>`;
-        } 
+        }
 
         noteList.innerHTML += noteLi;
     }
@@ -46,26 +46,29 @@ function getNoteById(noteId) {
     for(note of notesArray) {
         if(note.id == noteId){
             return note;
-        } 
+        }
     }
 }
 
-function noteClicked(noteId) {
+async function noteClicked(noteId) {
 
-    //1. Hämta ut vald anteckning.
-    //2. Hämta ut content från anteckningen.
-    //3. Sätta texten i textfältet till content.
-
-    let note = getNoteById(noteId);
-    let noteContent = note.content;
-    let noteTitle = note.title;
-    
     let htmlContent = document.querySelector("#note");
     let htmlTitle = document.querySelector("#title");
 
-    htmlContent.value = noteContent;
-    htmlTitle.value = noteTitle;
+    let note = getNoteById(noteId);
     
+        let result = await fetch("/rest/Notes/" + note.id, {
+            method: "GET"
+        });
+        let noteObject=await result.json();
+
+        let title = noteObject.title;
+        let content = noteObject.content;
+
+            htmlContent.value = content;
+            htmlTitle.value = title;
+
+        getNotes();
 }
 
 async function addNote(e) {
@@ -77,12 +80,12 @@ async function addNote(e) {
     for(let file of files) {
         formData.append('files', file, file.name);
     }
-    
+
     let uploadResult = await fetch('/api/file-upload', {
         method: 'POST',
         body: formData
     });
-    
+
     let imageURL = await uploadResult.text();
 
 
@@ -99,20 +102,25 @@ async function addNote(e) {
             imgUrl: imageURL
         });
 
-    if (inputFieldValue == "" && titleFieldValue == "") {
-        alert("The fields can not be empty!");
-    } else {
-
-        let result = await fetch("/rest/Notes", {
-            method: "POST",
-            body: theBody
-        });
-
-        console.log(await result.text());
-
-
-        notesArray.push(theBody);
-        getNotes();
+        if (titleFieldValue === "") {
+            alert("Please enter a title.");
+        }
+        else if (inputFieldValue === ""){
+            alert("Please write something in the note window or add a file.")
+        }
+        else {
+    
+            let result = await fetch("/rest/Notes", {
+                method: "POST",
+                body: theBody
+            });
+    
+            console.log(await result.text());
+    
+    
+            notesArray.push(theBody);
+            getNotes();
+    
 
     }
 }
@@ -161,3 +169,4 @@ function clearInput() {
 
     renderNotes();
 }
+
