@@ -1,5 +1,7 @@
 import express.Express;
 import express.middleware.Middleware;
+import org.apache.commons.fileupload.FileItem;
+
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
@@ -25,6 +27,28 @@ public class Main {
             System.out.println(note.toString());
 
             db.createNotes(note);
+
+        });
+
+        app.post("/api/file-upload", (request, response) -> {
+           String imageUrl = null;
+
+           try{
+               List<FileItem> files = request.getFormData("files");
+               imageUrl = db.uploadImage(files.get(0));
+           }catch (Exception e){e.printStackTrace();}
+
+            response.send(imageUrl);
+        });
+
+
+        app.get("/rest/Notes/:id", (req, res)->{
+
+            int id = Integer.parseInt(req.getParam("id"));
+
+            Note notes = db.getNoteById(id);
+
+            res.json(notes);
 
         });
 

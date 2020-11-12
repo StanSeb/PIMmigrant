@@ -6,13 +6,14 @@ public class Note {
     private String title;
     private String content;
     private long timestamp;
+    private String imgUrl;
 
-
-    public Note(int id, String title, String content, long timestamp) {
+    public Note(int id, String title, String content, long timestamp, String imgUrl) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.timestamp = timestamp;
+        this.imgUrl = imgUrl;
     }
 
     public Note() {}
@@ -50,6 +51,13 @@ public class Note {
         this.timestamp = timestamp;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 
 
     @Override
@@ -59,6 +67,7 @@ public class Note {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", timestamp=" + timestamp +
+                ", imgUrl='" + imgUrl + '\'' +
                 '}';
     }
 }
