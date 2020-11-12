@@ -42,6 +42,17 @@ public class Main {
         });
 
 
+        app.get("/rest/Notes/:id", (req, res)->{
+
+            int id = Integer.parseInt(req.getParam("id"));
+
+            Note notes = db.getNoteById(id);
+
+            res.json(notes);
+
+        });
+
+
         try{
             app.use(Middleware.statics(Paths.get("src/www").toString()));
         }catch(IOException e){e.printStackTrace();}

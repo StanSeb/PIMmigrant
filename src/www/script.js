@@ -19,7 +19,7 @@ function renderNotes() {
     for (let note of notesArray) {
 
         let date = new Date(note.timestamp).toLocaleString();
-        let noteLi = `<li class="note-li">
+        let noteLi = `<li class="note-li" onclick="noteClicked(${note.id})">
                         <div class="noteli-text">
                         <h2>${note.title}</h2>
                         <h3 id="date">${date}</h3>
@@ -41,6 +41,32 @@ function renderNotes() {
     }
 }
 
+function getNoteById(noteId) {
+
+    for(note of notesArray) {
+        if(note.id == noteId){
+            return note;
+        } 
+    }
+}
+
+function noteClicked(noteId) {
+
+    //1. Hämta ut vald anteckning.
+    //2. Hämta ut content från anteckningen.
+    //3. Sätta texten i textfältet till content.
+
+    let note = getNoteById(noteId);
+    let noteContent = note.content;
+    let noteTitle = note.title;
+    
+    let htmlContent = document.querySelector("#note");
+    let htmlTitle = document.querySelector("#title");
+
+    htmlContent.value = noteContent;
+    htmlTitle.value = noteTitle;
+    
+}
 
 async function addNote(e) {
     e.preventDefault();
@@ -135,4 +161,3 @@ function clearInput() {
 
     renderNotes();
 }
-
