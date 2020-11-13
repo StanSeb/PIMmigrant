@@ -1,4 +1,5 @@
 let notesArray = [];
+theNoteObjectId= null;
 
 // Communication between js and the server
 async function getNotes() {
@@ -51,16 +52,62 @@ function getNoteById(noteId) {
 
 async function noteClicked(noteId) {
 
+    let htmlContent = document.querySelector("#note");
+    let htmlTitle = document.querySelector("#title");
+    let htmlImage = document.querySelector("#image-place");
+    let htmlFile = document.querySelector("#file-place");
+
+    htmlImage.src = "";
+    htmlFile.href = "";
+    htmlFile.innerHTML = "";
+
+
     let note = getNoteById(noteId);
     
         let result = await fetch("/rest/Notes/" + note.id, {
             method: "GET"
         });
 
-        console.log(await result.text());
+        let noteObject=await result.json();
 
-        getNotes();
+        theNoteObjectId = noteObject.id;
+        let title = noteObject.title;
+        let content = noteObject.content;
+        let file = noteObject.imgUrl;
+
+            htmlContent.value = content;
+            htmlTitle.value = title;
+
+            if(file.includes(".jpeg") || file.includes(".PNG") || file.includes(".svg") ||
+                file.includes(".TIFF") || file.includes(".BMP")) {
+                    htmlImage.src = file;
+                    htmlFile.href = null;
+                    getNotes();
+            }
+            else{
+                htmlImage.src = null;
+                htmlFile.href = file;
+                htmlFile.innerHTML = file;
+                getNotes();
+            } 
+
+            
 }
+
+async function deleteNote(){
+   
+    let theBodyUp = JSON.stringify(
+        {
+            id: theNoteObjectId,   
+        });
+            let result = await fetch("/rest/Notes/delete", {
+                method: "DELETE",
+                body: theBodyUp
+            });
+            console.log(result);
+            notesArray.push(theBodyUp);
+            getNotes();
+        }  
 
 async function addNote(e) {
     e.preventDefault();
@@ -86,12 +133,20 @@ async function addNote(e) {
     let titleFieldValue = titleField.value;
     let inputFieldValue = inputField.value;
 
-    let theBody = JSON.stringify(
+    let theBodyUp = JSON.stringify(
         {
+            id: theNoteObjectId,
             title: titleFieldValue,
             content: inputFieldValue,
             imgUrl: imageURL
         });
+
+        let theBody = JSON.stringify(
+            {
+                title: titleFieldValue,
+                content: inputFieldValue,
+                imgUrl: imageURL
+            });
 
     if (titleFieldValue === "") {
         alert("Please enter a title.");
@@ -99,19 +154,24 @@ async function addNote(e) {
     else if (inputFieldValue === ""){
         alert("Please write something in the note window or add a file.")
     }
-    else {
-
+    else if(theNoteObjectId ==0 || theNoteObjectId == null){
+    
         let result = await fetch("/rest/Notes", {
             method: "POST",
             body: theBody
         });
-
         console.log(await result.text());
-
-
         notesArray.push(theBody);
         getNotes();
-
+    }
+    else{
+        let result = await fetch("/rest/Notes/update", {
+            method: "POST",
+            body: theBodyUp
+        });
+        console.log(result);
+        notesArray.push(theBody);
+        getNotes();
     }
 }
 
@@ -120,6 +180,13 @@ Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), 
     const hiddenInput = button.parentElement.querySelector(".file-upload__input");
     const label = button.parentElement.querySelector(".file-upload__label");
     const defaultLabelText = "No file(s) selected";
+
+    let htmlImage = document.querySelector("#image-place");
+    let htmlFile = document.querySelector("#file-place");
+
+    htmlImage.src = "";
+    htmlFile.href = "";
+    htmlFile.innerHTML = "";
 
     // Set default text for label
     label.textContent = defaultLabelText;
@@ -131,7 +198,8 @@ Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), 
 
     hiddenInput.addEventListener("change", function () {
         const fileNameList = Array.prototype.map.call(hiddenInput.files, function (file) {
-            return file.name;
+            
+        return file.name; 
         });
 
         label.textContent = fileNameList.join(",") || defaultLabelText;

@@ -8,7 +8,9 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    min-height: 100vh;
+    min-height: 400px;
+    margin-bottom: 100px;
+    clear: both;
 }
 
 header {
@@ -101,11 +103,12 @@ header img {
     margin: 1rem;
     display: flex;
     width: 80%;
+    margin-right: 1rem;
     border-top: 0.5px solid rgb(206, 206, 206);
 }
 
 .notes-list{
-    height: 465px;
+    height: 480px;
     overflow-y: auto;
     margin-top: 2.5rem;
 }
@@ -160,6 +163,45 @@ header img {
     display: flex;
     flex-direction: column;
     margin-left: 1rem;
+    width: 80%;
+    height: 470px;
+}
+
+.text-image {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    height: 467px;
+    border: 0.5px solid rgb(206, 206, 206);
+}
+
+.image-container {
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
+
+.image-container img{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 83%;
+    height: auto;
+    text-align: center;
+}
+
+.image-container a {
+    margin-left: 1rem;
+    text-align: center;
+    font-size: 15px;
+    color: black;
+    transition: 0.2s ease;
+}
+
+.image-container a:hover {
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .note input{
@@ -169,6 +211,8 @@ header img {
     border: none;
     font-weight: bold;
     font-size: 20px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 
 }
 
@@ -177,15 +221,15 @@ header img {
 }
 
 .note textarea{
-    border: 0.5px solid rgb(206, 206, 206);
     outline: none;
     padding: 1rem;
     font-family: 'Montserrat', sans-serif;
     resize: none;
+    border: none;
 }
 
 .choice-container{
-    display: flex;
+    display: block;
     flex-direction: row;
     margin-left: 0;
     margin-top: 0.25rem;
@@ -256,11 +300,6 @@ header img {
       font-weight: bold;
   }
 
-@media only screen and (max-width: 1700px){
-    .note{
-        width: 70%;
-    }
-}   
 
 @media only screen and (max-width: 1500px){
     .search-bar{
@@ -269,24 +308,9 @@ header img {
 }
 
 @media only screen and (max-width: 1300px){
-    .list-container{
-        width: 100%;
-    }
 
     .notes-container{
         width: 95%;
-    }
-}
-
-@media only screen and (max-width: 1065px){
-    .note{
-        width: 70%;
-    }
-}   
-
-@media only screen and (max-width: 1006px){
-    .note {
-        width: 70%;
     }
 }
 
@@ -298,8 +322,14 @@ header img {
     }
 }
 
-@media only screen and (max-width: 630px){
-    .note {
+@media only screen and (max-width: 730px){
+    #note {
+        width: 40%;
+    }
+}
+
+@media only screen and (max-width: 402px){
+    .notes-container {
         width: 50%;
     }
 }
