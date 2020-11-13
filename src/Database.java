@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import express.utils.Utils;
 import org.apache.commons.fileupload.FileItem;
+
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -80,7 +81,8 @@ public class Database {
             stmt.setString(4, note.getImgUrl());
             stmt.setInt(5, note.getId());
 
-            stmt.executeUpdate();
+           int rs=  stmt.executeUpdate();
+
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -89,6 +91,7 @@ public class Database {
     }
 
     public void deleteNote(Note note) {
+
         try {
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM notes WHERE notes.id = ?");
             stmt.setInt(1, note.getId());
@@ -98,9 +101,8 @@ public class Database {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
     }
-
-
 
     public String uploadImage(FileItem image){
         String imageUrl = "/uploads/" + image.getName();

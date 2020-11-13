@@ -72,6 +72,23 @@ async function noteClicked(noteId) {
      
 }
 
+
+async function deleteNote(){
+   
+    let theBodyUp = JSON.stringify(
+        {
+            id: theNoteObjectId,   
+        });
+            let result = await fetch("/rest/Notes/delete", {
+                method: "DELETE",
+                body: theBodyUp
+            });
+            console.log(result);
+            notesArray.push(theBodyUp);
+            getNotes();
+        }  
+
+
 async function addNote(e) {
     e.preventDefault();
 
@@ -134,7 +151,7 @@ async function addNote(e) {
                 body: theBodyUp
             });
             console.log(result);
-            notesArray.push(theBody);
+            notesArray.push(theBodyUp);
             getNotes();
         }
 

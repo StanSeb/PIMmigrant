@@ -13,12 +13,6 @@ public class Main {
         Express app = new Express();
         Database db = new Database();
 
-        app.get("/rest/Notes",(req, res) ->{
-           List<Note> notes = db.getAllNotes();
-
-           res.json(notes);
-        });
-
 
         app.post("/rest/Notes",(req, res)->{
 
@@ -28,19 +22,25 @@ public class Main {
 
             db.createNotes(note);
 
+
         });
 
         app.post("/api/file-upload", (request, response) -> {
-           String imageUrl = null;
+            String imageUrl = null;
 
-           try{
-               List<FileItem> files = request.getFormData("files");
-               imageUrl = db.uploadImage(files.get(0));
-           }catch (Exception e){e.printStackTrace();}
+            try{
+                List<FileItem> files = request.getFormData("files");
+                imageUrl = db.uploadImage(files.get(0));
+            }catch (Exception e){e.printStackTrace();}
 
             response.send(imageUrl);
         });
 
+        app.get("/rest/Notes",(req, res) ->{
+            List<Note> notes = db.getAllNotes();
+
+            res.json(notes);
+        });
 
         app.get("/rest/Notes/:id", (req, res)->{
 
@@ -52,6 +52,25 @@ public class Main {
 
         });
 
+        app.post("/rest/Notes/update",(req, res)->{
+
+            Note note = (Note) req.getBody(Note.class);
+
+            System.out.println(note.toString());
+
+            db.updateNote(note);
+
+        });
+
+        app.delete("/rest/Notes/delete",(req, res)->{
+
+            Note note = (Note) req.getBody(Note.class);
+
+            System.out.println(note.toString());
+
+            db.deleteNote(note);
+
+        });
 
         try{
             app.use(Middleware.statics(Paths.get("src/www").toString()));
@@ -64,3 +83,7 @@ public class Main {
 
     }
 }
+
+
+
+
