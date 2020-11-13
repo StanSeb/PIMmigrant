@@ -21,20 +21,18 @@
             <div class="list-container">
                 <div class="search-container">
                     <div class="search-bar">
-                        <input type="text" placeholder="Search note by title" class="searchbox" id="searchbox"
-                            onkeyup="search(this.value)">
+                        <input type="text" placeholder="Search..." class="searchbox" id="searchbox" onkeyup="search(this.value)">
                         <div class="search-buttons">
-                            <button class="cross-icon" id="clear" onclick="clearInput()"><i
-                                    class="far fa-times-circle"></i></button>
+                            <button class="cross-icon" id="clear" onclick="clearInput()"><i class="far fa-times-circle"></i></button>
                         </div>
                     </div>
                 </div>
 
                 <aside class="notes-list" id="notes-list">
-
+                    
                 </aside>
 
-            </div>
+            </div>            
 
             <section class="note">
                 <input type="text" placeholder="Add a title" id="title" required>
@@ -44,7 +42,7 @@
 
                 <div class="choice-container">
                     <button class="save-btn" onclick="addNote(event)"><i class="fas fa-save"></i></button>
-                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                    <button class="delete-btn" onclick="deleteNote()"><i class="fas fa-trash"></i></button>
                     <input class="file-upload__input" type="file" name="user-file[]" id="save-btn" multiple>
                     <button class="file-upload__button" type="button"><i class="fas fa-paperclip"></i></button>
                     <span class="file-upload__label">No file(s) selected</span>
