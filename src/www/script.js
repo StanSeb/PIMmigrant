@@ -66,7 +66,7 @@ async function noteClicked(noteId) {
         theNoteObjectId = noteObject.id;
         let title = noteObject.title;
         let content = noteObject.content;
-
+        
         htmlContent.value = content;
         htmlTitle.value = title;
      
@@ -180,18 +180,21 @@ Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), 
     });
 });
 
-
 function search(input) {
 
     let searchlist = $('.note-li');
 
     for (let findText of searchlist) {
         let foundText = $(findText).find('h2').text();
+        let foundDate = $(findText).find('h3').text();
+        let foundContent = $(findText).find('p').text();
 
-        if (foundText.toLowerCase().includes(input.toLowerCase())) {
+        if (foundText.toLowerCase().includes(input.toLowerCase()) || 
+            foundDate.includes(input) || foundContent.toLowerCase().includes(input.toLowerCase())){
             $(findText).show();
         } else {
             $(findText).hide();
+          
         }
     }
 }
@@ -201,4 +204,6 @@ function clearInput() {
 
     renderNotes();
 }
+
+
 
