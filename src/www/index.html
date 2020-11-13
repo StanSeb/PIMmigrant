@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi">
     <title>PIMmigrant</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/eb137f63c7.js" crossorigin="anonymous"></script>
@@ -21,7 +21,7 @@
             <div class="list-container">
                 <div class="search-container">
                     <div class="search-bar">
-                        <input type="text" placeholder="Search note by title" class="searchbox" id="searchbox"
+                        <input type="text" placeholder="Search..." class="searchbox" id="searchbox"
                             onkeyup="search(this.value)">
                         <div class="search-buttons">
                             <button class="cross-icon" id="clear" onclick="clearInput()"><i
@@ -69,7 +69,6 @@
     <script>
         window.onload = getNotes();
     </script>
-</body>
 
 <div class="footer">
     <div class="logotext">
@@ -88,5 +87,7 @@
     </div>
 
 </div>
+
+</body>
 
 </html>

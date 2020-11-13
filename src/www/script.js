@@ -213,8 +213,10 @@ function search(input) {
 
     for (let findText of searchlist) {
         let foundText = $(findText).find('h2').text();
+        let foundDate = $(findText).find('h3').text();
+        let foundContent = $(findText).find('p').text();
 
-        if (foundText.toLowerCase().includes(input.toLowerCase())) {
+        if (foundText.toLowerCase().includes(input.toLowerCase()) || foundDate.includes(input.toLowerCase()) || foundContent.toLowerCase().includes(input.toLowerCase())) {
             $(findText).show();
         } else {
             $(findText).hide();
