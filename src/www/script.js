@@ -1,4 +1,5 @@
 let notesArray = [];
+theNoteObjectId= null;
 
 // Communication between js and the server
 async function getNotes() {
@@ -60,20 +61,21 @@ async function noteClicked(noteId) {
         let result = await fetch("/rest/Notes/" + note.id, {
             method: "GET"
         });
-        let noteObject=await result.json();
 
+        let noteObject=await result.json();
+        theNoteObjectId = noteObject.id;
         let title = noteObject.title;
         let content = noteObject.content;
 
-            htmlContent.value = content;
-            htmlTitle.value = title;
-
-        getNotes();
+        htmlContent.value = content;
+        htmlTitle.value = title;
+     
 }
 
 async function addNote(e) {
     e.preventDefault();
 
+            
     let files = document.querySelector('input[type=file]').files;
     let formData = new FormData();
 
@@ -95,12 +97,20 @@ async function addNote(e) {
     let titleFieldValue = titleField.value;
     let inputFieldValue = inputField.value;
 
-    let theBody = JSON.stringify(
+    let theBodyUp = JSON.stringify(
         {
+            id: theNoteObjectId,
             title: titleFieldValue,
             content: inputFieldValue,
             imgUrl: imageURL
         });
+
+        let theBody = JSON.stringify(
+            {
+                title: titleFieldValue,
+                content: inputFieldValue,
+                imgUrl: imageURL
+            });
 
         if (titleFieldValue === "") {
             alert("Please enter a title.");
@@ -108,21 +118,26 @@ async function addNote(e) {
         else if (inputFieldValue === ""){
             alert("Please write something in the note window or add a file.")
         }
-        else {
+        else if(theNoteObjectId ==0 || theNoteObjectId == null){
     
             let result = await fetch("/rest/Notes", {
                 method: "POST",
                 body: theBody
             });
-    
             console.log(await result.text());
-    
-    
             notesArray.push(theBody);
             getNotes();
-    
+        }
+        else{
+            let result = await fetch("/rest/Notes/update", {
+                method: "POST",
+                body: theBodyUp
+            });
+            console.log(result);
+            notesArray.push(theBody);
+            getNotes();
+        }
 
-    }
 }
 
 // Attach file button
