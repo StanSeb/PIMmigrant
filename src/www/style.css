@@ -211,6 +211,12 @@ header img {
     outline: none;
 }
 
+
+
+.delete-button{
+    display: none;
+}
+
 .file-upload__input {
     display: none;
 }

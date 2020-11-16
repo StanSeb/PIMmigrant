@@ -52,6 +52,27 @@ public class Main {
 
         });
 
+        app.delete("/rest/Notes/delete",(req, res)->{
+
+            Note note = (Note) req.getBody(Note.class);
+
+            System.out.println(note.toString());
+
+            db.deleteNote(note);
+
+        });
+
+        app.post("/rest/Notes/update",(req, res)->{
+
+            Note note = (Note) req.getBody(Note.class);
+
+            System.out.println(note.toString());
+
+            db.updateNote(note);
+
+        });
+
+
 
         try{
             app.use(Middleware.statics(Paths.get("src/www").toString()));

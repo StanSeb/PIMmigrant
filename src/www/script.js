@@ -50,16 +50,39 @@ function getNoteById(noteId) {
     }
 }
 
+
+//Start av function DELETE
+
+async function deleteNote(){
+   
+    let theBodyUp = JSON.stringify(
+        {
+            id: theNoteObjectId,   
+        });
+            let result = await fetch("/rest/Notes/delete", {
+                method: "DELETE",
+                body: theBodyUp
+            });
+            console.log(result);
+            notesArray.push(theBodyUp);
+            getNotes();
+        }  
+
+
+ 
+
 async function noteClicked(noteId) {
 
     let htmlContent = document.querySelector("#note");
     let htmlTitle = document.querySelector("#title");
 
     let note = getNoteById(noteId);
+
     
         let result = await fetch("/rest/Notes/" + note.id, {
             method: "GET"
         });
+        
         let noteObject=await result.json();
 
         let title = noteObject.title;
@@ -69,7 +92,10 @@ async function noteClicked(noteId) {
             htmlTitle.value = title;
 
         getNotes();
+
 }
+
+
 
 async function addNote(e) {
     e.preventDefault();
@@ -125,6 +151,8 @@ async function addNote(e) {
     }
 }
 
+
+
 // Attach file button
 Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), function (button) {
     const hiddenInput = button.parentElement.querySelector(".file-upload__input");
@@ -169,4 +197,6 @@ function clearInput() {
 
     renderNotes();
 }
+
+
 

@@ -34,18 +34,16 @@ public class Database {
 
     public void createNotes(Note note){
         try{
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO notes (title, content, timestamp) VALUES (?,?,?)");
-            PreparedStatement stmt1 = conn.prepareStatement("INSERT INTO files (filename, note_id) VALUES (?,?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO notes (title, content, timestamp, imgUrl) VALUES (?,?,?,?)");
             stmt.setString(1, note.getTitle());
             stmt.setString(2, note.getContent());
             stmt.setLong(3, Instant.now().toEpochMilli());
-            stmt1.setString(1, note.getFilename());
-            stmt1.setInt(2, note.getId());
+            stmt.setString(4, note.getImgUrl());
+
 
 
 
             stmt.executeUpdate();
-            stmt1.executeUpdate();
 
         }catch (SQLException throwables){
             throwables.printStackTrace();
@@ -56,7 +54,7 @@ public class Database {
         List<Note> notes = null;
 
         try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes INNER JOIN files ON notes.id = files.note_id");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes");
 
             ResultSet rs = stmt.executeQuery();
 
@@ -70,11 +68,11 @@ public class Database {
         return notes;
     }
 
-    public Note getNoteByTitle(String title){
+    public Note getNoteById(int id){
         Note notes= null;
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes INNER JOIN files ON notes.id = files.note_id WHERE notes.title = ?");
-            stmt.setString(1, title);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes WHERE notes.id = ?");
+            stmt.setInt(1, id);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -89,35 +87,35 @@ public class Database {
 
     public void updateNote(Note note){
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE notes SET title = ?, content = ?, timestamp = ? WHERE notes.id = ?");
-            PreparedStatement stmt1 = conn.prepareStatement("UPDATE files SET filename = ? WHERE files.note_id = ?");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE notes SET title = ?, content = ?, timestamp = ?, imgUrl = ? WHERE notes.id = ?");
             stmt.setString(1, note.getTitle());
             stmt.setString(2, note.getContent());
-            stmt.setLong(3, note.getTimestamp());
-            stmt.setInt(4, note.getId());
-            stmt1.setString(1, note.getFilename());
-            stmt1.setInt(2, note.getId());
+            stmt.setLong(3, Instant.now().toEpochMilli());
+            stmt.setString(4, note.getImgUrl());
+            stmt.setInt(5, note.getId());
 
             stmt.executeUpdate();
-            stmt1.executeUpdate();
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+
 
     }
 
     public void deleteNote(Note note) {
+
         try {
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM notes  WHERE notes.id = ?");
-            PreparedStatement stmt1 = conn.prepareStatement("DELETE FROM files WHERE files.note_id = ?");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM notes WHERE notes.id = ?");
             stmt.setInt(1, note.getId());
-            stmt1.setInt(1, note.getId());
 
             stmt.executeUpdate();
-            stmt1.executeUpdate();
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
     }
 
 }
