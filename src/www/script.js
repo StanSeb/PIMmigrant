@@ -1,5 +1,38 @@
 let notesArray = [];
-theNoteObjectId= null;
+let theNoteObjectId = null;
+let file = null;
+
+// Attach file button
+Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), function (button) {
+    const hiddenInput = button.parentElement.querySelector(".file-upload__input");
+    const label = button.parentElement.querySelector(".file-upload__label");
+    const defaultLabelText = "No file(s) selected";
+
+    let htmlImage = document.querySelector("#image-place");
+    let htmlFile = document.querySelector("#file-place");
+
+    htmlImage.src = "";
+    htmlFile.href = "";
+    htmlFile.innerHTML = "";
+
+    // Set default text for label
+    label.textContent = defaultLabelText;
+    label.title = defaultLabelText;
+
+    button.addEventListener("click", function () {
+        hiddenInput.click();
+    });
+
+    hiddenInput.addEventListener("change", function () {
+        const fileNameList = Array.prototype.map.call(hiddenInput.files, function (file) {
+            
+        return file.name; 
+        });
+
+        label.textContent = fileNameList.join(",") || defaultLabelText;
+    });
+});
+
 
 // Communication between js and the server
 async function getNotes() {
@@ -32,7 +65,7 @@ function renderNotes() {
         }                
 
         else if(note.imgUrl.includes(".jpeg") || note.imgUrl.includes(".PNG") || note.imgUrl.includes(".svg") ||
-                note.imgUrl.includes(".TIFF") || note.imgUrl.includes(".BMP")) {
+                note.imgUrl.includes(".TIFF") || note.imgUrl.includes(".BMP") || note.imgUrl.includes(".jpg")) {
             noteLi += `<img src=${note.imgUrl} class="thumbnail"></li>`;
         }else{
             noteLi += `<i class="far fa-file"></i></li>`;
@@ -73,13 +106,13 @@ async function noteClicked(noteId) {
         theNoteObjectId = noteObject.id;
         let title = noteObject.title;
         let content = noteObject.content;
-        let file = noteObject.imgUrl;
+        file = noteObject.imgUrl;
 
             htmlContent.value = content;
             htmlTitle.value = title;
 
             if(file.includes(".jpeg") || file.includes(".PNG") || file.includes(".svg") ||
-                file.includes(".TIFF") || file.includes(".BMP")) {
+                file.includes(".TIFF") || file.includes(".BMP") || file.includes(".jpg")) {
                     htmlImage.src = file;
                     htmlFile.href = null;
                     getNotes();
@@ -91,8 +124,8 @@ async function noteClicked(noteId) {
                 getNotes();
             } 
 
-            
 }
+
 
 async function deleteNote(){
    
@@ -115,8 +148,8 @@ async function addNote(e) {
     let files = document.querySelector('input[type=file]').files;
     let formData = new FormData();
 
-    for(let file of files) {
-            formData.append('files', file, file.name);
+    for(let thisFile of files) {
+            formData.append('files', thisFile, thisFile.name);
     }
     
     let uploadResult = await fetch('/api/file-upload', {
@@ -131,9 +164,17 @@ async function addNote(e) {
     let inputField = document.getElementById("note");
 
     let titleFieldValue = titleField.value;
-    let inputFieldValue = inputField.value;
+    let inputFieldValue = inputField.value;   
+   
 
-    let theBodyUp = JSON.stringify(
+    let theBody = JSON.stringify(
+        {
+            title: titleFieldValue,
+            content: inputFieldValue,
+            imgUrl: imageURL
+        });
+
+    let theBodyUpdateNoImage = JSON.stringify(
         {
             id: theNoteObjectId,
             title: titleFieldValue,
@@ -141,21 +182,20 @@ async function addNote(e) {
             imgUrl: imageURL
         });
 
-        let theBody = JSON.stringify(
-            {
-                title: titleFieldValue,
-                content: inputFieldValue,
-                imgUrl: imageURL
-            });
+    let theBodyUpdateWithImage = JSON.stringify(
+        {
+            id: theNoteObjectId,
+            title: titleFieldValue,
+            content: inputFieldValue,
+            imgUrl: file
+        });
 
-    if (titleFieldValue === "") {
-        alert("Please enter a title.");
+    if (titleFieldValue === "" && inputFieldValue === "") {
+        alert("Please enter a title and/or a note.");
     }
-    else if (inputFieldValue === ""){
-        alert("Please write something in the note window or add a file.")
-    }
-    else if(theNoteObjectId ==0 || theNoteObjectId == null){
-    
+
+    else if(theNoteObjectId == 0 || theNoteObjectId == null){
+
         let result = await fetch("/rest/Notes", {
             method: "POST",
             body: theBody
@@ -163,49 +203,42 @@ async function addNote(e) {
         console.log(await result.text());
         notesArray.push(theBody);
         getNotes();
-    }
-    else{
-        let result = await fetch("/rest/Notes/update", {
-            method: "POST",
-            body: theBodyUp
-        });
-        console.log(result);
-        notesArray.push(theBody);
-        getNotes();
-    }
+    }    
+
+    else if(theNoteObjectId != 0 || theNoteObjectId != null){
+
+        if(file !='' && imageURL!=''){
+            let result = await fetch("/rest/Notes/update", {
+                method: "POST",
+                body: theBodyUpdateNoImage
+            });
+            console.log(await result.text());
+            notesArray.push(theBodyUpdateNoImage);
+            getNotes();
+        }
+    
+        else if(file!=''){
+            let result = await fetch("/rest/Notes/update", {
+                method: "POST",
+                body: theBodyUpdateWithImage
+            });
+            console.log(await result.text());
+            notesArray.push(theBodyUpdateWithImage);
+            getNotes();
+        }  
+        
+        else if (imageURL!=''){
+            let result = await fetch("/rest/Notes/update", {
+                method: "POST",
+                body: theBodyUpdateNoImage
+            });
+            console.log(await result.text());
+            notesArray.push(theBodyUpdateNoImage);
+            getNotes();
+        }        
+    }  
+
 }
-
-// Attach file button
-Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), function (button) {
-    const hiddenInput = button.parentElement.querySelector(".file-upload__input");
-    const label = button.parentElement.querySelector(".file-upload__label");
-    const defaultLabelText = "No file(s) selected";
-
-    let htmlImage = document.querySelector("#image-place");
-    let htmlFile = document.querySelector("#file-place");
-
-    htmlImage.src = "";
-    htmlFile.href = "";
-    htmlFile.innerHTML = "";
-
-    // Set default text for label
-    label.textContent = defaultLabelText;
-    label.title = defaultLabelText;
-
-    button.addEventListener("click", function () {
-        hiddenInput.click();
-    });
-
-    hiddenInput.addEventListener("change", function () {
-        const fileNameList = Array.prototype.map.call(hiddenInput.files, function (file) {
-            
-        return file.name; 
-        });
-
-        label.textContent = fileNameList.join(",") || defaultLabelText;
-    });
-});
-
 
 function search(input) {
 
