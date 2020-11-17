@@ -79,6 +79,7 @@ function renderNotes() {
 
         //Adding the note to the list of notes
         noteList.innerHTML += noteLi;
+        
     }
 }
 
