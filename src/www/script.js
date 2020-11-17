@@ -219,7 +219,7 @@ async function addNote(e) {
         });
 
     //Alert the user if the Title and Note values are empty    
-    if (titleFieldValue === "" && inputFieldValue === "") {
+    if (titleFieldValue === "" || inputFieldValue === "") {
         alert("Please enter a title and/or a note.");
     }
 
