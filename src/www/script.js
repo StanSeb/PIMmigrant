@@ -266,6 +266,15 @@ async function addNote(e) {
             console.log(await result.text());
             notesArray.push(theBodyUpdateNoImage);
             getNotes();
+        }
+        else{
+            let result = await fetch("/rest/Notes/update", {
+                method: "POST",
+                body: theBodyUpdateNoImage
+            });
+            console.log(await result.text());
+            notesArray.push(theBodyUpdateNoImage);
+            getNotes();
         }        
     }  
 
