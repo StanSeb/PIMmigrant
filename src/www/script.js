@@ -70,8 +70,8 @@ function renderNotes() {
             note.imgUrl = "";
         }                
 
-        else if(note.imgUrl.includes(".jpeg") || note.imgUrl.includes(".PNG") || note.imgUrl.includes(".svg") ||
-                note.imgUrl.includes(".TIFF") || note.imgUrl.includes(".BMP") || note.imgUrl.includes(".jpg")) {
+        else if(note.imgUrl.includes(".jpeg") || note.imgUrl.includes(".png") || note.imgUrl.includes(".svg") ||
+                note.imgUrl.includes(".tiff") || note.imgUrl.includes(".bmp") || note.imgUrl.includes(".jpg")) {
             noteLi += `<img src=${note.imgUrl} class="thumbnail"></li>`;
         }else{
             noteLi += `<i class="far fa-file"></i></li>`;
@@ -128,8 +128,8 @@ async function noteClicked(noteId) {
             htmlTitle.value = title;
 
             //If-else statement for getting either an image or a file back
-            if(file.includes(".jpeg") || file.includes(".PNG") || file.includes(".svg") ||
-                file.includes(".TIFF") || file.includes(".BMP") || file.includes(".jpg")) {
+            if(file.includes(".jpeg") || file.includes(".png") || file.includes(".svg") ||
+                file.includes(".tiff") || file.includes(".bmp") || file.includes(".jpg")) {
                     htmlImage.src = file;
                     htmlFile.href = null;
                     getNotes();
